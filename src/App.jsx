@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Feed from './pages/Feed';
 
 export default function ButtonUsage() {
   return (
@@ -10,6 +11,7 @@ export default function ButtonUsage() {
           &#129299; Readdit
         </Typography>
       </Box>
+      <Feed />
     </div>
   );
 }
