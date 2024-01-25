@@ -57,13 +57,14 @@ const PostFormModal = () => {
       >
         <FormControl sx={{ padding: '20px', ...style, gap: '10px' }}>
           <TextField
+            error={!form.title}
             name='title'
             label='Title'
             variant='outlined'
             value={form.title}
             onChange={handleFormChange}
+            helperText={form.title ? '' : 'Required'}
           />
-
           <Button
             sx={{
               ':hover': {
@@ -77,6 +78,7 @@ const PostFormModal = () => {
             Add Image
           </Button>
           <TextField
+            error={!form.content}
             name='content'
             label='Content'
             variant='outlined'
@@ -84,6 +86,7 @@ const PostFormModal = () => {
             rows={5}
             value={form.content}
             onChange={handleFormChange}
+            helperText={form.content ? '' : 'Required'}
           />
           <Button variant='contained' type='submit' onClick={handleSubmit}>
             Post
