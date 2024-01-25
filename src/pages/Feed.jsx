@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Post from '../components/Post/Post';
+import Stack from '@mui/material/Stack';
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
@@ -22,11 +23,11 @@ const Feed = () => {
 
   // render data
   return (
-    <div>
+    <Stack spacing={2}>
       {posts.map((post) => (
-        <Post post={post} />
+        <Post key={post.id} post={post} />
       ))}
-    </div>
+    </Stack>
   );
 };
 
