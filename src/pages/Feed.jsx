@@ -25,7 +25,7 @@ const Feed = () => {
   return (
     <Stack spacing={2}>
       {posts.map((post) => (
-        <Post key={post.id} post={post} />
+        <Post key={post._id} post={post} />
       ))}
     </Stack>
   );
