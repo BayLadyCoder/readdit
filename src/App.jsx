@@ -8,7 +8,7 @@ import PostFormModal from './components/PostForm/PostForm';
 import Feed from './pages/Feed';
 import Post from './pages/Post';
 
-export default function ButtonUsage() {
+const App = () => {
   return (
     <Stack>
       <Stack
@@ -31,4 +31,6 @@ export default function ButtonUsage() {
       </Stack>
     </Stack>
   );
-}
+};
+
+export default App;
