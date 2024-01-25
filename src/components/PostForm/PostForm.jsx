@@ -48,7 +48,9 @@ const PostFormModal = () => {
 
   return (
     <div>
-      <Button onClick={handleOpen}>New Post</Button>
+      <Button onClick={handleOpen} variant='contained'>
+        + New Post
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
