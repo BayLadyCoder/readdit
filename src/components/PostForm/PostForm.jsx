@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -24,10 +24,26 @@ const PostFormModal = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [form, setForm] = useState({
+    title: '',
+    content: '',
+  });
+
+  const handleFormChange = (event) => {
+    setForm({ ...form, [event.target.name]: event.target.value });
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // todo: send POST /posts request to the BE server
+
+    fetch('http://localhost:8080/api/posts', {
+      method: 'POST',
+      body: JSON.stringify(form),
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((res) => res.json())
+      .then((data) => console.log({ data }))
+      .catch((err) => console.log({ err }));
   };
 
   return (
@@ -40,7 +56,13 @@ const PostFormModal = () => {
         aria-describe='Create new post with title, content, and an image.'
       >
         <FormControl sx={{ padding: '20px', ...style, gap: '10px' }}>
-          <TextField name='title' label='Title' variant='outlined' />
+          <TextField
+            name='title'
+            label='Title'
+            variant='outlined'
+            value={form.title}
+            onChange={handleFormChange}
+          />
 
           <Button
             sx={{
@@ -60,6 +82,8 @@ const PostFormModal = () => {
             variant='outlined'
             multiline
             rows={5}
+            value={form.content}
+            onChange={handleFormChange}
           />
           <Button variant='contained' type='submit' onClick={handleSubmit}>
             Post
