@@ -26,7 +26,7 @@ const App = () => {
       <Stack alignItems='center'>
         <Routes>
           <Route path='/' element={<Feed />} />
-          <Route path='/post' element={<Post />} />
+          <Route path='/posts/:postId' element={<Post />} />
         </Routes>
       </Stack>
     </Stack>
