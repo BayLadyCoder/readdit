@@ -1,30 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Post from '../components/Post/Post';
 import Stack from '@mui/material/Stack';
+import { useFetch } from '../customHooks/useFetch';
+import { getAllPostsURL } from '../resources/URLs.js';
 
 const Feed = () => {
-  const [posts, setPosts] = useState([]);
-  const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const { data, isLoading, isError } = useFetch(getAllPostsURL);
 
-  useEffect(() => {
-    setIsLoading(true);
-    fetch('http://localhost:8080/api/posts')
-      .then((res) => res.json())
-      .then((data) => setPosts(data.posts))
-      .catch((err) => setIsError(true))
-      .finally(() => setIsLoading(false));
-  }, []);
+  if (isError) return <h1>Failed to load</h1>;
+  if (isLoading) return <h1>Loading...</h1>;
+  if (!data) return <h1>There is no post</h1>;
 
-  console.log({ posts, isError, isLoading });
-
-  if (isError) return <div>failed to load</div>;
-  if (isLoading) return <div>loading...</div>;
-
-  // render data
   return (
     <Stack spacing={2}>
-      {posts.map((post) => (
+      {data.posts.map((post) => (
         <Post key={post._id} post={post} />
       ))}
     </Stack>
