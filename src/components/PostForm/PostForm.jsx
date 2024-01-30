@@ -1,6 +1,4 @@
 import React, { useState, useRef } from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
@@ -27,19 +25,31 @@ const PostFormModal = () => {
   const [form, setForm] = useState({
     title: '',
     content: '',
+    image: '',
   });
+  const inputFileRef = useRef(null);
 
   const handleFormChange = (event) => {
-    setForm({ ...form, [event.target.name]: event.target.value });
+    if (event.target.name === 'image') {
+      setForm({ ...form, [event.target.name]: event.target.files[0] });
+    } else {
+      setForm({ ...form, [event.target.name]: event.target.value });
+    }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    const formData = new FormData();
+    formData.append('title', form.title);
+    formData.append('content', form.content);
+    formData.append('image', form.image);
+
     fetch('http://localhost:8080/api/posts', {
       method: 'POST',
-      body: JSON.stringify(form),
-      headers: { 'Content-Type': 'application/json' },
+      body: formData,
+      // body: JSON.stringify(form),
+      // headers: { 'Content-Type': 'application/json' },
     })
       .then((res) => res.json())
       .then((data) => console.log({ data }))
@@ -55,7 +65,7 @@ const PostFormModal = () => {
         open={open}
         onClose={handleClose}
         aria-label='Create new post modal'
-        aria-describe='Create new post with title, content, and an image.'
+        aria-description='Create new post with title, content, and an image.'
       >
         <FormControl sx={{ padding: '20px', ...style, gap: '10px' }}>
           <TextField
@@ -75,7 +85,16 @@ const PostFormModal = () => {
               backgroundColor: 'rgba(25, 118, 210, 0.07)',
               padding: '30px 20px',
             }}
+            onClick={() => inputFileRef.current.click()}
           >
+            <input
+              type='file'
+              name='image'
+              accept='image/png, image/jpeg'
+              ref={inputFileRef}
+              onChange={handleFormChange}
+              hidden
+            />
             <ImageIcon sx={{ marginRight: '5px' }} />
             Add Image
           </Button>
