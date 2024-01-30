@@ -18,7 +18,7 @@ const style = {
   p: 4,
 };
 
-const PostFormModal = () => {
+const PostFormModal = ({ posts, setPosts }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -52,8 +52,10 @@ const PostFormModal = () => {
       // headers: { 'Content-Type': 'application/json' },
     })
       .then((res) => res.json())
-      .then((data) => console.log({ data }))
+      .then((data) => setPosts([data.post, ...posts]))
       .catch((err) => console.log({ err }));
+
+    handleClose();
   };
 
   return (

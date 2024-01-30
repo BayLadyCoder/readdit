@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -9,6 +9,8 @@ import Feed from './pages/Feed';
 import Post from './pages/Post';
 
 const App = () => {
+  const [posts, setPosts] = useState([]);
+
   return (
     <Stack>
       <Stack
@@ -21,11 +23,14 @@ const App = () => {
             &#129299; Readdit
           </Typography>
         </Link>
-        <PostFormModal />
+        <PostFormModal posts={posts} setPosts={setPosts} />
       </Stack>
       <Stack alignItems='center'>
         <Routes>
-          <Route path='/' element={<Feed />} />
+          <Route
+            path='/'
+            element={<Feed posts={posts} setPosts={setPosts} />}
+          />
           <Route path='/posts/:postId' element={<Post />} />
         </Routes>
       </Stack>
