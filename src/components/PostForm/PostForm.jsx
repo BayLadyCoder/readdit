@@ -18,15 +18,20 @@ const style = {
   p: 4,
 };
 
+const initialForm = {
+  title: '',
+  content: '',
+  image: '',
+};
+
 const PostFormModal = ({ posts, setPosts }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const [form, setForm] = useState({
-    title: '',
-    content: '',
-    image: '',
-  });
+  const handleClose = () => {
+    setForm(initialForm);
+    setOpen(false);
+  };
+  const [form, setForm] = useState(initialForm);
   const inputFileRef = useRef(null);
 
   const handleFormChange = (event) => {
@@ -54,7 +59,6 @@ const PostFormModal = ({ posts, setPosts }) => {
       .then((res) => res.json())
       .then((data) => setPosts([data.post, ...posts]))
       .catch((err) => console.log({ err }));
-
     handleClose();
   };
 
