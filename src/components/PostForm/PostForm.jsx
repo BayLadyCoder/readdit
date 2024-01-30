@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Modal from '@mui/material/Modal';
@@ -24,15 +26,27 @@ const initialForm = {
   image: '',
 };
 
+const initialValidationError = {
+  title: false,
+  content: false,
+  image: false,
+};
+
 const PostFormModal = ({ posts, setPosts }) => {
   const [open, setOpen] = React.useState(false);
+
+  const [form, setForm] = useState(initialForm);
+  const inputFileRef = useRef(null);
+  const [validationError, setValidationError] = useState(
+    initialValidationError
+  );
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setForm(initialForm);
+    setValidationError(initialValidationError);
     setOpen(false);
   };
-  const [form, setForm] = useState(initialForm);
-  const inputFileRef = useRef(null);
 
   const handleFormChange = (event) => {
     if (event.target.name === 'image') {
@@ -62,6 +76,10 @@ const PostFormModal = ({ posts, setPosts }) => {
     handleClose();
   };
 
+  const validateForm = (fieldName) => {
+    setValidationError({ ...validationError, [fieldName]: !form[fieldName] });
+  };
+
   return (
     <div>
       <Button onClick={handleOpen} variant='contained'>
@@ -75,37 +93,54 @@ const PostFormModal = ({ posts, setPosts }) => {
       >
         <FormControl sx={{ padding: '20px', ...style, gap: '10px' }}>
           <TextField
-            error={!form.title}
+            error={validationError.title}
+            onBlur={() => validateForm('title')}
             name='title'
             label='Title'
             variant='outlined'
             value={form.title}
             onChange={handleFormChange}
-            helperText={form.title ? '' : 'Required'}
+            helperText={validationError.title ? 'Required' : ''}
           />
-          <Button
-            sx={{
-              ':hover': {
-                backgroundColor: 'rgba(25, 118, 210, 0.1)',
-              },
-              backgroundColor: 'rgba(25, 118, 210, 0.07)',
-              padding: '30px 20px',
-            }}
-            onClick={() => inputFileRef.current.click()}
-          >
-            <input
-              type='file'
-              name='image'
-              accept='image/png, image/jpeg'
-              ref={inputFileRef}
-              onChange={handleFormChange}
-              hidden
-            />
-            <ImageIcon sx={{ marginRight: '5px' }} />
-            Add Image
-          </Button>
+          <Box w='100%'>
+            <Button
+              sx={{
+                ':hover': {
+                  backgroundColor: 'rgba(25, 118, 210, 0.1)',
+                },
+                backgroundColor: 'rgba(25, 118, 210, 0.07)',
+                padding: '30px 20px',
+                border: validationError.image ? '1px solid red' : 'none',
+                width: '100%',
+              }}
+              onClick={() => inputFileRef.current.click()}
+              onBlur={() => validateForm('image')}
+            >
+              <input
+                type='file'
+                name='image'
+                accept='image/png, image/jpeg'
+                ref={inputFileRef}
+                onChange={handleFormChange}
+                hidden
+              />
+              <ImageIcon sx={{ marginRight: '5px' }} />
+              Add Image
+            </Button>
+            {validationError.image && (
+              <Typography
+                color='error'
+                variant='body2'
+                m='3px 14px 0px 14px'
+                fontSize='0.75rem'
+              >
+                Required
+              </Typography>
+            )}
+          </Box>
           <TextField
-            error={!form.content}
+            error={validationError.content}
+            onBlur={() => validateForm('content')}
             name='content'
             label='Content'
             variant='outlined'
@@ -113,7 +148,7 @@ const PostFormModal = ({ posts, setPosts }) => {
             rows={5}
             value={form.content}
             onChange={handleFormChange}
-            helperText={form.content ? '' : 'Required'}
+            helperText={validationError.content ? 'Required' : ''}
           />
           <Button variant='contained' type='submit' onClick={handleSubmit}>
             Post
