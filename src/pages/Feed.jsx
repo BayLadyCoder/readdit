@@ -4,11 +4,11 @@ import Stack from '@mui/material/Stack';
 import { useFetch } from '../customHooks/useFetch';
 import { getAllPostsURL } from '../resources/URLs.js';
 
-const Feed = ({ posts, setPosts }) => {
+const Feed = ({ posts, setPosts, setOpenPostForm }) => {
   const { data, isLoading, isError } = useFetch(getAllPostsURL);
 
   useEffect(() => {
-    if (data?.posts) {
+    if (posts.length === 0 && data?.posts) {
       setPosts(data.posts);
     }
   }, [data]);
@@ -19,7 +19,7 @@ const Feed = ({ posts, setPosts }) => {
   return (
     <Stack spacing={2}>
       {posts.map((post) => (
-        <Post key={post._id} post={post} />
+        <Post key={post._id} post={post} setOpenPostForm={setOpenPostForm} />
       ))}
     </Stack>
   );

@@ -1,37 +1,56 @@
 import React, { useState } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
-import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
-import PostFormModal from './components/PostForm/PostForm';
 
 import Feed from './pages/Feed';
 import Post from './pages/Post';
+import PostForm from './pages/PostForm';
 
 const App = () => {
   const [posts, setPosts] = useState([]);
+  const [openPostForm, setOpenPostForm] = useState(false);
 
   return (
     <Stack>
       <Stack
         direction='row'
         justifyContent='space-between'
-        sx={{ borderBottom: '1px solid #dddddd' }}
+        alignItems='center'
+        sx={{ borderBottom: '1px solid #dddddd', width: '100%' }}
       >
         <Link to='/' style={{ textDecoration: 'none', color: 'inherit' }}>
-          <Typography variant='h5' component='h1' gutterBottom>
+          <Typography variant='h5' component='h1'>
             &#129299; Readdit
           </Typography>
         </Link>
-        <PostFormModal posts={posts} setPosts={setPosts} />
+        <Link to='/posts/new'>
+          <Button variant='contained'>+ New Post</Button>
+        </Link>
       </Stack>
       <Stack alignItems='center'>
         <Routes>
           <Route
             path='/'
-            element={<Feed posts={posts} setPosts={setPosts} />}
+            element={
+              <Feed
+                posts={posts}
+                setPosts={setPosts}
+                openPostForm={openPostForm}
+                setOpenPostForm={setOpenPostForm}
+              />
+            }
           />
           <Route path='/posts/:postId' element={<Post />} />
+          <Route
+            path='/posts/:postId/edit'
+            element={<PostForm posts={posts} setPosts={setPosts} />}
+          />
+          <Route
+            path='/posts/new'
+            element={<PostForm posts={posts} setPosts={setPosts} />}
+          />
         </Routes>
       </Stack>
     </Stack>
