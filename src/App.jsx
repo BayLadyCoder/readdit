@@ -10,7 +10,6 @@ import PostForm from './pages/PostForm';
 
 const App = () => {
   const [posts, setPosts] = useState([]);
-  const [openPostForm, setOpenPostForm] = useState(false);
 
   return (
     <Stack>
@@ -33,14 +32,7 @@ const App = () => {
         <Routes>
           <Route
             path='/'
-            element={
-              <Feed
-                posts={posts}
-                setPosts={setPosts}
-                openPostForm={openPostForm}
-                setOpenPostForm={setOpenPostForm}
-              />
-            }
+            element={<Feed posts={posts} setPosts={setPosts} />}
           />
           <Route path='/posts/:postId' element={<Post />} />
           <Route
