@@ -8,6 +8,7 @@ import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { baseURL } from '../../resources/URLs';
+import { timeAgo } from '../../helpers/timeAgo';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
@@ -22,7 +23,7 @@ const PostCard = ({ post, setOpenPostForm }) => {
           </IconButton>
         }
         title={post.title}
-        subheader={`Posted by ${post.author.name} on ${post.createdAt}`}
+        subheader={`Posted by ${post.author.name} ${timeAgo(post.updatedAt)}`}
       />
       <Link to={`/posts/${post._id}`}>
         <CardMedia
