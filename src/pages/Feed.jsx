@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Post from '../components/Post/Post';
+import PostCard from '../components/PostCard/PostCard';
 import Stack from '@mui/material/Stack';
 import { useFetch } from '../customHooks/useFetch';
 import { getAllPostsURL } from '../resources/URLs.js';
@@ -19,7 +19,11 @@ const Feed = ({ posts, setPosts, setOpenPostForm }) => {
   return (
     <Stack spacing={2}>
       {posts.map((post) => (
-        <Post key={post._id} post={post} setOpenPostForm={setOpenPostForm} />
+        <PostCard
+          key={post._id}
+          post={post}
+          setOpenPostForm={setOpenPostForm}
+        />
       ))}
     </Stack>
   );
