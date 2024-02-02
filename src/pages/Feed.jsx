@@ -5,7 +5,11 @@ import { useFetch } from '../customHooks/useFetch';
 import { getAllPostsURL } from '../resources/URLs.js';
 
 const Feed = ({ posts, setPosts }) => {
-  const { data, isLoading, isError } = useFetch(getAllPostsURL);
+  const { data, isLoading, isError } = useFetch(
+    getAllPostsURL,
+    {},
+    posts.length === 0
+  );
 
   useEffect(() => {
     if (posts.length === 0 && data?.posts) {
