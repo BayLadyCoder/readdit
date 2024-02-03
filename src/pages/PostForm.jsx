@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField';
 import ImageIcon from '@mui/icons-material/Image';
 
 import { useFetch } from '../customHooks/useFetch';
-import { baseURL, createGetOnePostURL } from '../resources/URLs.js';
+import { baseURL, createPostURLByPostId } from '../resources/URLs.js';
 
 const initialForm = {
   _id: '',
@@ -33,7 +33,7 @@ const PostForm = ({ posts, setPosts }) => {
     initialValidationError
   );
 
-  const { data, isLoading, isError } = useFetch(createGetOnePostURL(postId));
+  const { data, isLoading, isError } = useFetch(createPostURLByPostId(postId));
 
   useEffect(() => {
     if (data?.post) {

@@ -1,11 +1,11 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useFetch } from '../customHooks/useFetch';
-import { createGetOnePostURL } from '../resources/URLs.js';
+import { createPostURLByPostId } from '../resources/URLs.js';
 
 const Post = () => {
   const { postId } = useParams();
-  const { data, isLoading, isError } = useFetch(createGetOnePostURL(postId));
+  const { data, isLoading, isError } = useFetch(createPostURLByPostId(postId));
 
   // todo: style display
 

@@ -6,7 +6,6 @@ import CardMedia from '@mui/material/CardMedia';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { baseURL } from '../../resources/URLs';
 import { timeAgo } from '../../helpers/timeAgo';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
@@ -15,8 +14,9 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import EditIcon from '@mui/icons-material/Edit';
+import { baseURL, createPostURLByPostId } from '../../resources/URLs.js';
 
-const PostCard = ({ post }) => {
+const PostCard = ({ post, deletePost }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -24,6 +24,17 @@ const PostCard = ({ post }) => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleDeletePost = (postId) => {
+    fetch(createPostURLByPostId(postId), {
+      method: 'DELETE',
+    })
+      .then((res) => res.json())
+      .then((data) => deletePost(data.postId))
+      .catch((err) => console.log(err));
+
+    handleClose();
   };
   return (
     <Card sx={{ width: { xs: 345, sm: 500, md: 600 } }}>
@@ -61,7 +72,7 @@ const PostCard = ({ post }) => {
             Edit
           </MenuItem>
         </Link>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={() => handleDeletePost(post._id)}>
           <DeleteOutlinedIcon sx={{ mr: '5px' }} size='small' />
           Delete
         </MenuItem>

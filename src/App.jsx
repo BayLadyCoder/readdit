@@ -11,6 +11,10 @@ import PostForm from './pages/PostForm';
 const App = () => {
   const [posts, setPosts] = useState([]);
 
+  const deletePost = (postId) => {
+    setPosts(posts.filter((post) => post._id !== postId));
+  };
+
   return (
     <Stack>
       <Stack
@@ -32,7 +36,9 @@ const App = () => {
         <Routes>
           <Route
             path='/'
-            element={<Feed posts={posts} setPosts={setPosts} />}
+            element={
+              <Feed posts={posts} setPosts={setPosts} deletePost={deletePost} />
+            }
           />
           <Route path='/posts/:postId' element={<Post />} />
           <Route
