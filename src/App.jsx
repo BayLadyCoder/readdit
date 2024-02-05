@@ -7,6 +7,7 @@ import Stack from '@mui/material/Stack';
 import Feed from './pages/Feed';
 import Post from './pages/Post';
 import PostForm from './pages/PostForm';
+import LoginOrSignupForm from './pages/LoginOrSignupForm';
 
 const App = () => {
   const [posts, setPosts] = useState([]);
@@ -31,6 +32,9 @@ const App = () => {
         <Link to='/posts/new'>
           <Button variant='contained'>+ New Post</Button>
         </Link>
+        <Link to='/login'>
+          <Button variant='contained'>Login</Button>
+        </Link>
       </Stack>
       <Stack alignItems='center'>
         <Routes>
@@ -41,6 +45,11 @@ const App = () => {
             }
           />
           <Route path='/posts/:postId' element={<Post />} />
+          <Route path='/login' element={<LoginOrSignupForm isLogin={true} />} />
+          <Route
+            path='/sign-up'
+            element={<LoginOrSignupForm isLogin={false} />}
+          />
           <Route
             path='/posts/:postId/edit'
             element={<PostForm posts={posts} setPosts={setPosts} />}
