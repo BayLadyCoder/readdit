@@ -33,10 +33,10 @@ const PostForm = ({ posts, setPosts }) => {
     initialValidationError
   );
 
-  const { data, isLoading, isError } = useFetch(createPostURLByPostId(postId));
-
-  useEffect(() => {
-    if (data?.post) {
+  const { isLoading, isError } = useFetch({
+    url: createPostURLByPostId(postId),
+    immediate: !!postId,
+    dataHandler: (data) => {
       setForm({
         _id: data.post._id,
         title: data.post.title,
@@ -44,8 +44,12 @@ const PostForm = ({ posts, setPosts }) => {
         imageUrl: data.post.imageUrl,
         imageSrc: `${baseURL}/${data.post.imageUrl}`,
       });
-    }
-  }, [data]);
+    },
+  });
+
+  const { fetchData: submitPost } = useFetch({
+    immediate: false,
+  });
 
   const handleFormChange = (event) => {
     if (event.target.name === 'imageUrl') {
@@ -76,16 +80,14 @@ const PostForm = ({ posts, setPosts }) => {
 
     const method = form._id ? 'PUT' : 'POST';
 
-    fetch(url, {
-      method,
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((data) => {
+    submitPost({
+      url,
+      options: { method, body: formData },
+      dataHandler: (data) => {
         if (method === 'POST') {
           setPosts([data.post, ...posts]);
         } else {
-          // PUT
+          // method === PUT
           const updatedPosts = posts
             .map((post) => {
               if (post._id === data.post._id) {
@@ -97,8 +99,8 @@ const PostForm = ({ posts, setPosts }) => {
           setPosts(updatedPosts);
         }
         navigate('/');
-      })
-      .catch((err) => console.log(err));
+      },
+    });
   };
 
   const validateForm = (fieldName) => {
