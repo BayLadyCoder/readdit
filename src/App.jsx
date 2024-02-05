@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -10,12 +9,6 @@ import PostForm from './pages/PostForm';
 import LoginOrSignupForm from './pages/LoginOrSignupForm';
 
 const App = () => {
-  const [posts, setPosts] = useState([]);
-
-  const deletePost = (postId) => {
-    setPosts(posts.filter((post) => post._id !== postId));
-  };
-
   return (
     <Stack>
       <Stack
@@ -38,26 +31,15 @@ const App = () => {
       </Stack>
       <Stack alignItems='center'>
         <Routes>
-          <Route
-            path='/'
-            element={
-              <Feed posts={posts} setPosts={setPosts} deletePost={deletePost} />
-            }
-          />
+          <Route path='/' element={<Feed />} />
           <Route path='/posts/:postId' element={<Post />} />
           <Route path='/login' element={<LoginOrSignupForm isLogin={true} />} />
           <Route
             path='/sign-up'
             element={<LoginOrSignupForm isLogin={false} />}
           />
-          <Route
-            path='/posts/:postId/edit'
-            element={<PostForm posts={posts} setPosts={setPosts} />}
-          />
-          <Route
-            path='/posts/new'
-            element={<PostForm posts={posts} setPosts={setPosts} />}
-          />
+          <Route path='/posts/:postId/edit' element={<PostForm />} />
+          <Route path='/posts/new' element={<PostForm />} />
         </Routes>
       </Stack>
     </Stack>

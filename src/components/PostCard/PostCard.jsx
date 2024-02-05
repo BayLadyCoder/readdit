@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -16,10 +17,12 @@ import MenuItem from '@mui/material/MenuItem';
 import EditIcon from '@mui/icons-material/Edit';
 import { baseURL, createPostURLByPostId } from '../../resources/URLs.js';
 import { useFetch } from '../../customHooks/useFetch';
+import { deletePost } from '../../reducers/postsSlice.js';
 
-const PostCard = ({ post, deletePost }) => {
+const PostCard = ({ post }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const dispatch = useDispatch();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -32,7 +35,7 @@ const PostCard = ({ post, deletePost }) => {
     options: {
       method: 'DELETE',
     },
-    dataHandler: (data) => deletePost(data.postId),
+    dataHandler: (data) => dispatch(deletePost(data.postId)),
     immediate: false,
   });
 

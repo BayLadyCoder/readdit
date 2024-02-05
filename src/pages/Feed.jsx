@@ -1,14 +1,21 @@
-import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import PostCard from '../components/PostCard/PostCard';
 import Stack from '@mui/material/Stack';
 import { useFetch } from '../customHooks/useFetch';
 import { getAllPostsURL } from '../resources/URLs.js';
+import { setPosts } from '../reducers/postsSlice.js';
 
-const Feed = ({ posts, setPosts, deletePost }) => {
+const Feed = () => {
+  const posts = useSelector((state) => state.posts.posts);
+  const hasFetchedFeedPosts = useSelector(
+    (state) => state.posts.hasFetchedFeedPosts
+  );
+  const dispatch = useDispatch();
+
   const { isLoading, isError } = useFetch({
     url: getAllPostsURL,
-    immediate: posts.length === 0,
-    dataHandler: (data) => setPosts(data.posts),
+    immediate: !hasFetchedFeedPosts,
+    dataHandler: (data) => dispatch(setPosts(data.posts)),
   });
 
   if (isError) return <h1>Failed to load</h1>;
@@ -18,7 +25,7 @@ const Feed = ({ posts, setPosts, deletePost }) => {
   return (
     <Stack spacing={2}>
       {posts.map((post) => (
-        <PostCard key={post._id} post={post} deletePost={deletePost} />
+        <PostCard key={post._id} post={post} />
       ))}
     </Stack>
   );

@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -9,6 +10,7 @@ import ImageIcon from '@mui/icons-material/Image';
 
 import { useFetch } from '../customHooks/useFetch';
 import { baseURL, createPostURLByPostId } from '../resources/URLs.js';
+import { setPosts, updatePost } from '../reducers/postsSlice.js';
 
 const initialForm = {
   _id: '',
@@ -24,7 +26,9 @@ const initialValidationError = {
   imageUrl: false,
 };
 
-const PostForm = ({ posts, setPosts }) => {
+const PostForm = () => {
+  const posts = useSelector((state) => state.posts.posts);
+  const dispatch = useDispatch();
   const { postId } = useParams();
   const navigate = useNavigate();
   const [form, setForm] = useState(initialForm);
@@ -85,18 +89,9 @@ const PostForm = ({ posts, setPosts }) => {
       options: { method, body: formData },
       dataHandler: (data) => {
         if (method === 'POST') {
-          setPosts([data.post, ...posts]);
-        } else {
-          // method === PUT
-          const updatedPosts = posts
-            .map((post) => {
-              if (post._id === data.post._id) {
-                post = data.post;
-              }
-              return post;
-            })
-            .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
-          setPosts(updatedPosts);
+          dispatch(setPosts([data.post, ...posts]));
+        } else if (method === 'PUT') {
+          dispatch(updatePost(data.post));
         }
         navigate('/');
       },
