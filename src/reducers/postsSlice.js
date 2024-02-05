@@ -5,8 +5,8 @@ const initialState = {
   posts: [],
 };
 
-export const postSlice = createSlice({
-  name: 'post',
+export const postsSlice = createSlice({
+  name: 'posts',
   initialState,
   reducers: {
     setPosts: (state, action) => {
@@ -31,6 +31,6 @@ export const postSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setPosts, addPost, updatePost, deletePost } = postSlice.actions;
+export const { setPosts, addPost, updatePost, deletePost } = postsSlice.actions;
 
-export default postSlice.reducer;
+export default postsSlice.reducer;
