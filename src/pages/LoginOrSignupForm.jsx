@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../reducers/userSlice';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -30,6 +32,7 @@ const LoginOrSignupForm = ({ isLogin }) => {
   const [validationError, setValidationError] = useState(
     initialValidationError
   );
+  const dispatch = useDispatch();
 
   const handleFormChange = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });
@@ -55,8 +58,6 @@ const LoginOrSignupForm = ({ isLogin }) => {
       return;
     }
 
-    console.log({ form });
-
     const url = isLogin
       ? `${baseURL}/api/auth/login`
       : `${baseURL}/api/auth/sign-up`;
@@ -70,7 +71,15 @@ const LoginOrSignupForm = ({ isLogin }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log({ data });
+        if (isLogin) {
+          dispatch(
+            login({
+              token: data.token,
+              id: data.userId,
+              username: data.username,
+            })
+          );
+        }
         navigate('/');
       })
       .catch((err) => {
