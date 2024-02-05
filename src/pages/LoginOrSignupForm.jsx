@@ -7,9 +7,12 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import { baseURL } from '../resources/URLs.js';
 
-const initialForm = {
+const initialLoginForm = {
   email: '',
   password: '',
+};
+const initialSignUpForm = {
+  ...initialLoginForm,
   confirmPassword: '',
 };
 
@@ -21,7 +24,9 @@ const initialValidationError = {
 
 const LoginOrSignupForm = ({ isLogin }) => {
   const navigate = useNavigate();
-  const [form, setForm] = useState(initialForm);
+  const [form, setForm] = useState(
+    isLogin ? initialLoginForm : initialSignUpForm
+  );
   const [validationError, setValidationError] = useState(
     initialValidationError
   );
@@ -49,6 +54,8 @@ const LoginOrSignupForm = ({ isLogin }) => {
       });
       return;
     }
+
+    console.log({ form });
 
     const url = isLogin
       ? `${baseURL}/api/auth/login`
