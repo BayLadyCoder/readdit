@@ -5,7 +5,9 @@ import { createPostURLByPostId } from '../resources/URLs.js';
 
 const Post = () => {
   const { postId } = useParams();
-  const { data, isLoading, isError } = useFetch(createPostURLByPostId(postId));
+  const { data, isLoading, isError } = useFetch({
+    url: createPostURLByPostId(postId),
+  });
 
   // todo: style display
 
