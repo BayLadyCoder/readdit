@@ -15,6 +15,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import EditIcon from '@mui/icons-material/Edit';
 import { baseURL, createPostURLByPostId } from '../../resources/URLs.js';
+import { useFetch } from '../../customHooks/useFetch';
 
 const PostCard = ({ post, deletePost }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -26,14 +27,17 @@ const PostCard = ({ post, deletePost }) => {
     setAnchorEl(null);
   };
 
-  const handleDeletePost = (postId) => {
-    fetch(createPostURLByPostId(postId), {
+  const { fetchData: fetchDeletePost } = useFetch({
+    url: createPostURLByPostId(post._id),
+    options: {
       method: 'DELETE',
-    })
-      .then((res) => res.json())
-      .then((data) => deletePost(data.postId))
-      .catch((err) => console.log(err));
+    },
+    dataHandler: (data) => deletePost(data.postId),
+    immediate: false,
+  });
 
+  const handleDeletePost = () => {
+    fetchDeletePost();
     handleClose();
   };
   return (
@@ -72,7 +76,7 @@ const PostCard = ({ post, deletePost }) => {
             Edit
           </MenuItem>
         </Link>
-        <MenuItem onClick={() => handleDeletePost(post._id)}>
+        <MenuItem onClick={handleDeletePost}>
           <DeleteOutlinedIcon sx={{ mr: '5px' }} size='small' />
           Delete
         </MenuItem>
