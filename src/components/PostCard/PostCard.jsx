@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -29,6 +29,7 @@ const PostCard = ({ post }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const userId = useSelector((state) => state.user.id);
 
   const { fetchData: fetchDeletePost } = useFetch({
     url: createPostURLByPostId(post._id),
@@ -47,43 +48,49 @@ const PostCard = ({ post }) => {
     <Card sx={{ width: { xs: 345, sm: 500, md: 600 } }}>
       <CardHeader
         action={
-          <IconButton
-            aria-label='settings'
-            id='basic-button'
-            aria-controls={open ? 'basic-menu' : undefined}
-            aria-haspopup='true'
-            aria-expanded={open ? 'true' : undefined}
-            onClick={handleClick}
-          >
-            <MoreVertIcon />
-          </IconButton>
+          userId === post.author.id && (
+            <IconButton
+              aria-label='settings'
+              id='basic-button'
+              aria-controls={open ? 'basic-menu' : undefined}
+              aria-haspopup='true'
+              aria-expanded={open ? 'true' : undefined}
+              onClick={handleClick}
+            >
+              <MoreVertIcon />
+            </IconButton>
+          )
         }
         title={post.title}
-        subheader={`Posted by ${post.author.name} ${timeAgo(post.updatedAt)}`}
+        subheader={`Posted by ${post.author.username} ${timeAgo(
+          post.updatedAt
+        )}`}
       />
-      <Menu
-        id='basic-menu'
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        <Link
-          to={`posts/${post._id}/edit`}
-          style={{ textDecoration: 'none', color: 'inherit' }}
+      {userId === post.author.id && (
+        <Menu
+          id='basic-menu'
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
         >
-          <MenuItem onClick={handleClose}>
-            <EditIcon sx={{ mr: '5px' }} size='small' />
-            Edit
+          <Link
+            to={`posts/${post._id}/edit`}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            <MenuItem onClick={handleClose}>
+              <EditIcon sx={{ mr: '5px' }} size='small' />
+              Edit
+            </MenuItem>
+          </Link>
+          <MenuItem onClick={handleDeletePost}>
+            <DeleteOutlinedIcon sx={{ mr: '5px' }} size='small' />
+            Delete
           </MenuItem>
-        </Link>
-        <MenuItem onClick={handleDeletePost}>
-          <DeleteOutlinedIcon sx={{ mr: '5px' }} size='small' />
-          Delete
-        </MenuItem>
-      </Menu>
+        </Menu>
+      )}
       <Link to={`/posts/${post._id}`}>
         <CardMedia
           component='img'
