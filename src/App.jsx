@@ -1,4 +1,5 @@
 import { Link, Route, Routes } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -7,8 +8,11 @@ import Feed from './pages/Feed';
 import Post from './pages/Post';
 import PostForm from './pages/PostForm';
 import LoginOrSignupForm from './pages/LoginOrSignupForm';
+import UserNavMenu from './components/UserNavMenu/UserNavMenu';
 
 const App = () => {
+  const user = useSelector((state) => state.user);
+
   return (
     <Stack>
       <Stack
@@ -25,9 +29,13 @@ const App = () => {
         <Link to='/posts/new'>
           <Button variant='contained'>+ New Post</Button>
         </Link>
-        <Link to='/login'>
-          <Button variant='contained'>Login</Button>
-        </Link>
+        {user.isLoggedIn ? (
+          <UserNavMenu />
+        ) : (
+          <Link to='/login'>
+            <Button variant='contained'>Login</Button>
+          </Link>
+        )}
       </Stack>
       <Stack alignItems='center'>
         <Routes>
