@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../reducers/userSlice';
@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import { baseURL } from '../resources/URLs.js';
+import { useFetch } from '../customHooks/useFetch';
 
 const initialLoginForm = {
   email: '',
@@ -33,6 +34,7 @@ const LoginOrSignupForm = ({ isLogin }) => {
     initialValidationError
   );
   const dispatch = useDispatch();
+  const { fetchData: submitForm } = useFetch();
 
   const handleFormChange = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });
@@ -62,15 +64,16 @@ const LoginOrSignupForm = ({ isLogin }) => {
       ? `${baseURL}/api/auth/login`
       : `${baseURL}/api/auth/sign-up`;
 
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(form),
-      headers: {
-        'Content-Type': 'application/json',
+    submitForm({
+      url,
+      options: {
+        method: 'POST',
+        body: JSON.stringify(form),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       },
-    })
-      .then((res) => res.json())
-      .then((data) => {
+      dataHandler: (data) => {
         if (isLogin) {
           dispatch(
             login({
@@ -81,37 +84,38 @@ const LoginOrSignupForm = ({ isLogin }) => {
           );
         }
         navigate('/');
-      })
-      .catch((err) => {
-        console.log(err);
-        navigate('/login');
-      });
+      },
+    });
   };
   return (
-    <FormControl sx={{ padding: '20px', gap: '10px', width: '600px' }}>
-      <TextField
-        error={validationError.email}
-        onBlur={validateFormByFieldName}
-        name='email'
-        label='Email'
-        variant='outlined'
-        value={form.email}
-        onChange={handleFormChange}
-        helperText={validationError.email ? 'Required' : ''}
-      />
-      <TextField
-        type='password'
-        error={validationError.password}
-        onBlur={validateFormByFieldName}
-        name='password'
-        label='Password'
-        variant='outlined'
-        value={form.password}
-        onChange={handleFormChange}
-        helperText={validationError.password ? 'Required' : ''}
-      />
-      {!isLogin && (
+    <form>
+      <FormControl sx={{ padding: '20px', gap: '10px', width: '600px' }}>
         <TextField
+          type='email'
+          error={validationError.email}
+          onBlur={validateFormByFieldName}
+          name='email'
+          label='Email'
+          variant='outlined'
+          value={form.email}
+          onChange={handleFormChange}
+          autoComplete='email'
+          helperText={validationError.email ? 'Required' : ''}
+        />
+        <TextField
+          type='password'
+          error={validationError.password}
+          onBlur={validateFormByFieldName}
+          name='password'
+          label='Password'
+          variant='outlined'
+          value={form.password}
+          autoComplete={isLogin ? 'current-password' : 'new-password'}
+          onChange={handleFormChange}
+          helperText={validationError.password ? 'Required' : ''}
+        />
+        <TextField
+          sx={{ display: isLogin ? 'none' : 'inherit' }}
           type='password'
           error={validationError.confirmPassword}
           onBlur={validateFormByFieldName}
@@ -119,24 +123,25 @@ const LoginOrSignupForm = ({ isLogin }) => {
           label='Confirm Password'
           variant='outlined'
           value={form.confirmPassword}
+          autoComplete='new-password'
           onChange={handleFormChange}
           helperText={validationError.confirmPassword ? 'Required' : ''}
         />
-      )}
-      <Button variant='contained' type='submit' onClick={handleSubmit}>
-        {isLogin ? 'Login' : 'Sign Up'}
-      </Button>
-      <Stack direction='row' justifyContent='center'>
-        <Typography>
-          {isLogin ? 'New to Readdit?' : 'Already have an account?'}
-        </Typography>
-        <Link to={isLogin ? '/sign-up' : '/login'}>
-          <Typography sx={{ ml: '5px' }}>
-            {isLogin ? 'Sign Up' : 'Login'}
+        <Button variant='contained' type='submit' onClick={handleSubmit}>
+          {isLogin ? 'Login' : 'Sign Up'}
+        </Button>
+        <Stack direction='row' justifyContent='center'>
+          <Typography>
+            {isLogin ? 'New to Readdit?' : 'Already have an account?'}
           </Typography>
-        </Link>
-      </Stack>
-    </FormControl>
+          <Link to={isLogin ? '/sign-up' : '/login'}>
+            <Typography sx={{ ml: '5px' }}>
+              {isLogin ? 'Sign Up' : 'Login'}
+            </Typography>
+          </Link>
+        </Stack>
+      </FormControl>
+    </form>
   );
 };
 
