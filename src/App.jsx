@@ -9,6 +9,7 @@ import Post from './pages/Post';
 import PostForm from './pages/PostForm';
 import LoginOrSignupForm from './pages/LoginOrSignupForm';
 import UserNavMenu from './components/UserNavMenu/UserNavMenu';
+import NotificationAlert from './components/NotificationAlert/NotificationAlert';
 
 const App = () => {
   const user = useSelector((state) => state.user);
@@ -37,7 +38,8 @@ const App = () => {
           </Link>
         )}
       </Stack>
-      <Stack alignItems='center'>
+      <Stack alignItems='center' sx={{ p: 2 }}>
+        <NotificationAlert />
         <Routes>
           <Route path='/' element={<Feed />} />
           <Route path='/posts/:postId' element={<Post />} />
