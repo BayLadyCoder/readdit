@@ -1,5 +1,5 @@
 import { Link, Route, Routes } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -11,8 +11,19 @@ import LoginOrSignupForm from './pages/LoginOrSignupForm';
 import UserNavMenu from './components/UserNavMenu/UserNavMenu';
 import NotificationAlert from './components/NotificationAlert/NotificationAlert';
 
+import { login } from './reducers/userSlice';
+import { getUserDataFromSS } from './helpers/sessionStorage';
+
 const App = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+
+  if (!user.isLoggedIn) {
+    const userData = getUserDataFromSS();
+    if (userData) {
+      dispatch(login(userData));
+    }
+  }
 
   return (
     <Stack>

@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import {
+  saveUserDataToSS,
+  removeUserDataFromSS,
+} from '../helpers//sessionStorage';
+
 const initialState = {
   token: undefined,
   id: undefined,
@@ -20,8 +25,10 @@ export const userSlice = createSlice({
       state.id = action.payload.id;
       state.username = action.payload.username;
       state.isLoggedIn = true;
+      saveUserDataToSS(action.payload);
     },
     logout: () => {
+      removeUserDataFromSS();
       return initialState;
     },
   },
