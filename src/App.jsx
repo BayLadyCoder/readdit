@@ -26,7 +26,7 @@ const App = () => {
             &#129299; Readdit
           </Typography>
         </Link>
-        <Link to='/posts/new'>
+        <Link to={user.isLoggedIn ? `/posts/new` : '/login'}>
           <Button variant='contained'>+ New Post</Button>
         </Link>
         {user.isLoggedIn ? (
