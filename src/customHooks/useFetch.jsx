@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { showNotificationAlert } from '../reducers/notificationsSlice.js';
 
 const initialUseFetchParameters = {
   url: undefined,
@@ -19,6 +20,7 @@ export const useFetch = ({
   const [error, setError] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const token = useSelector((state) => state.user.token);
+  const dispatch = useDispatch();
 
   const fetchData = useCallback(
     async (
@@ -48,8 +50,6 @@ export const useFetch = ({
         const data = await res.json();
 
         if (res.status >= 400) {
-          setIsError(true);
-          setError(data.message);
           throw new Error(data.message);
         }
 
@@ -58,17 +58,22 @@ export const useFetch = ({
         console.error({ error });
         setIsError(true);
         setError(error);
+        const messages = error.message
+          .split('\n')
+          .map((message) => ({ message, type: 'error' }));
+
+        dispatch(showNotificationAlert(messages));
       }
       setIsLoading(false);
     },
-    [defaultUrl, defaultDataHandler, defaultOptions, immediate]
+    [defaultUrl, defaultDataHandler, defaultOptions, token, dispatch]
   );
 
   useEffect(() => {
-    if (immediate) {
+    if (defaultUrl && immediate) {
       fetchData();
     }
-  }, []);
+  }, [defaultUrl, immediate, fetchData]);
 
   return { data, isLoading, isError, error, fetchData };
 };
