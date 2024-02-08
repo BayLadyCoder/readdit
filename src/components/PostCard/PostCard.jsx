@@ -44,11 +44,12 @@ const PostCard = ({ post }) => {
     fetchDeletePost();
     handleClose();
   };
+
   return (
     <Card sx={{ width: { xs: 345, sm: 500, md: 600 } }}>
       <CardHeader
         action={
-          userId === post.author.id && (
+          userId === post.author._id && (
             <IconButton
               aria-label='settings'
               id='basic-button'
@@ -63,10 +64,10 @@ const PostCard = ({ post }) => {
         }
         title={post.title}
         subheader={`Posted by ${post.author.username} ${timeAgo(
-          post.updatedAt
+          post.createdAt
         )}`}
       />
-      {userId === post.author.id && (
+      {userId === post.author._id && (
         <Menu
           id='basic-menu'
           anchorEl={anchorEl}
