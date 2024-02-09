@@ -73,7 +73,7 @@ export const useFetch = ({
     if (defaultUrl && immediate) {
       fetchData();
     }
-  }, [defaultUrl, immediate, fetchData]);
+  }, []);
 
   return { data, isLoading, isError, error, fetchData };
 };

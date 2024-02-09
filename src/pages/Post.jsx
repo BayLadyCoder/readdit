@@ -6,6 +6,7 @@ const Post = () => {
   const { postId } = useParams();
   const { data, isLoading, isError } = useFetch({
     url: createPostURLByPostId(postId),
+    immediate: true,
   });
 
   // todo: style display
