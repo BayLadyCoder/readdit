@@ -10,6 +10,7 @@ const initialState = {
   id: undefined,
   username: undefined,
   isLoggedIn: false,
+  posts: undefined,
 };
 
 export const userSlice = createSlice({
@@ -31,10 +32,13 @@ export const userSlice = createSlice({
       removeUserDataFromSS();
       return initialState;
     },
+    setUserPosts: (state, action) => {
+      state.posts = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { login, logout } = userSlice.actions;
+export const { login, logout, setUserPosts } = userSlice.actions;
 
 export default userSlice.reducer;
