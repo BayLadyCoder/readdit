@@ -33,7 +33,9 @@ const PostCard = ({ post }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const userId = useSelector((state) => state.user.id);
+  const user = useSelector((state) => state.user);
+  const loggedInUserIsPostAuthor =
+    user.isLoggedIn && user._id === post.author._id;
 
   const { fetchData: fetchDeletePost } = useFetch({
     url: createPostURLByPostId(post._id),
@@ -56,7 +58,7 @@ const PostCard = ({ post }) => {
       <Card sx={{ width: { xs: 345, sm: 500, md: 600 } }}>
         <CardHeader
           action={
-            userId === post.author._id && (
+            loggedInUserIsPostAuthor && (
               <IconButton
                 sx={{ zIndex: 100 }}
                 aria-label='settings'
@@ -75,7 +77,7 @@ const PostCard = ({ post }) => {
             post.createdAt
           )}`}
         />
-        {userId === post.author._id && (
+        {loggedInUserIsPostAuthor && (
           <Menu
             id='basic-menu'
             anchorEl={anchorEl}
