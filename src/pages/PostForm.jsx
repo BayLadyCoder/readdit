@@ -2,10 +2,13 @@ import { useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import ImageIcon from '@mui/icons-material/Image';
+import ClearIcon from '@mui/icons-material/Clear';
 
 import { useFetch } from '../customHooks/useFetch';
 import { baseURL, createPostURLByPostId } from '../resources/URLs.js';
@@ -100,6 +103,10 @@ const PostForm = () => {
     });
   };
 
+  const removeImageFromForm = () => {
+    setForm({ ...form, imageUrl: undefined, imageSrc: undefined });
+  };
+
   const validateForm = (fieldName) => {
     setValidationError({ ...validationError, [fieldName]: !form[fieldName] });
   };
@@ -150,12 +157,24 @@ const PostForm = () => {
           Add Image
         </Button>
         {form.imageSrc && (
-          <img
-            style={{ maxWidth: '400px', maxHeight: '250px' }}
-            src={form.imageSrc}
-            alt={form.title}
-            loading='lazy'
-          />
+          <Stack direction='row' alignItems='flex-start'>
+            <img
+              style={{ maxWidth: '400px', maxHeight: '250px' }}
+              src={form.imageSrc}
+              alt={form.title}
+              loading='lazy'
+            />
+            <IconButton
+              onClick={removeImageFromForm}
+              sx={{
+                left: '-40px',
+                top: '0px',
+                zIndex: 10,
+              }}
+            >
+              <ClearIcon />
+            </IconButton>
+          </Stack>
         )}
       </Box>
       <TextField
