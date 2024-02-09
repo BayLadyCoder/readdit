@@ -8,6 +8,8 @@ import Feed from './pages/Feed';
 import Post from './pages/Post';
 import PostForm from './pages/PostForm';
 import LoginOrSignupForm from './pages/LoginOrSignupForm';
+import Profile from './pages/Profile';
+
 import UserNavMenu from './components/UserNavMenu/UserNavMenu';
 import NotificationAlert from './components/NotificationAlert/NotificationAlert';
 
@@ -49,7 +51,10 @@ const App = () => {
           </Link>
         )}
       </Stack>
-      <Stack alignItems='center' sx={{ p: 2 }}>
+      <Stack
+        alignItems='center'
+        sx={{ p: 2, background: '#eee', minHeight: '100vh' }}
+      >
         <NotificationAlert />
         <Routes>
           <Route path='/' element={<Feed />} />
@@ -61,6 +66,7 @@ const App = () => {
           />
           <Route path='/posts/:postId/edit' element={<PostForm />} />
           <Route path='/posts/new' element={<PostForm />} />
+          <Route path='/profile' element={<Profile />} />
         </Routes>
       </Stack>
     </Stack>

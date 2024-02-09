@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -38,7 +39,12 @@ const UserNavMenu = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <Link
+          to='/profile'
+          style={{ textDecoration: 'none', color: 'inherit' }}
+        >
+          <MenuItem onClick={handleClose}>Profile</MenuItem>
+        </Link>
         <MenuItem onClick={handleClose}>Setting</MenuItem>
         <MenuItem onClick={() => dispatch(logout())}>Logout</MenuItem>
       </Menu>
