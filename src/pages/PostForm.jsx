@@ -23,7 +23,6 @@ const initialForm = {
 const initialValidationError = {
   title: false,
   content: false,
-  imageUrl: false,
 };
 
 const PostForm = () => {
@@ -46,7 +45,9 @@ const PostForm = () => {
         title: data.post.title,
         content: data.post.content,
         imageUrl: data.post.imageUrl,
-        imageSrc: `${baseURL}/${data.post.imageUrl}`,
+        imageSrc: data.post.imageUrl
+          ? `${baseURL}/${data.post.imageUrl}`
+          : undefined,
       });
     },
   });
@@ -76,7 +77,9 @@ const PostForm = () => {
     const formData = new FormData();
     formData.append('title', form.title);
     formData.append('content', form.content);
-    formData.append('image', form.imageUrl);
+    if (form.imageUrl) {
+      formData.append('image', form.imageUrl);
+    }
 
     const url = form._id
       ? `${baseURL}/api/posts/${form._id}`
@@ -135,7 +138,6 @@ const PostForm = () => {
             width: '100%',
           }}
           onClick={() => inputFileRef.current.click()}
-          onBlur={() => validateForm('imageUrl')}
         >
           <input
             type='file'
@@ -148,16 +150,6 @@ const PostForm = () => {
           <ImageIcon sx={{ marginRight: '5px' }} />
           Add Image
         </Button>
-        {validationError.image && (
-          <Typography
-            color='error'
-            variant='body2'
-            m='3px 14px 0px 14px'
-            fontSize='0.75rem'
-          >
-            Required
-          </Typography>
-        )}
         {form.imageSrc && (
           <img
             style={{ maxWidth: '400px', maxHeight: '250px' }}
