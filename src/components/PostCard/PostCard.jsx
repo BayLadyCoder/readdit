@@ -105,7 +105,7 @@ const PostCard = ({ post }) => {
             <CardMedia
               component='img'
               image={`${baseURL}/${post.imageUrl}`}
-              alt='Sample image'
+              alt='Post image'
               sx={{ objectFit: 'contain', maxWidth: { sm: 300, md: 400 } }}
             />
           </Stack>
