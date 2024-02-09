@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 import { useFetch } from '../customHooks/useFetch';
 import { baseURL } from '../resources/URLs';
-import { setUserPosts } from '../reducers/userSlice';
+import { setUserPosts, logout } from '../reducers/userSlice';
+import { showNotificationAlert } from '../reducers/notificationsSlice';
 
 import PostCardClassic from '../components/PostCardClassic/PostCardClassic';
 
@@ -30,11 +33,27 @@ const Profile = () => {
   const [value, setValue] = useState(0);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
 
   const { isLoading, isError } = useFetch({
-    url: `${baseURL}/api/user/${user.id}/posts`,
+    url: `${baseURL}/api/users/${user.id}/posts`,
     dataHandler: (data) => dispatch(setUserPosts(data.posts)),
     immediate: user.id && user.posts === undefined,
+  });
+
+  const { fetchData: deleteAccount } = useFetch({
+    url: `${baseURL}/api/users/${user.id}`,
+    options: {
+      method: 'DELETE',
+    },
+    dataHandler: (data) => {
+      dispatch(
+        showNotificationAlert([{ message: data.message, type: 'success' }])
+      );
+      dispatch(logout());
+      navigate('/');
+    },
+    immediate: false,
   });
 
   const handleChangeTab = (event, newValue) => {
@@ -88,13 +107,21 @@ const Profile = () => {
         </CustomTabPanel>
       </Box>
       <Box
+        align='center'
         sx={{
           width: { sm: '100%', md: '25%' },
           maxWidth: '400px',
           background: '#fff',
         }}
       >
-        Profile
+        <Typography>Profile</Typography>
+        <Button
+          color='error'
+          variant='contained'
+          onClick={() => deleteAccount()}
+        >
+          Delete Account
+        </Button>
       </Box>
     </Stack>
   );
