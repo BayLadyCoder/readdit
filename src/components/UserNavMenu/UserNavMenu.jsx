@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -10,6 +10,7 @@ import { logout } from '../../reducers/userSlice';
 const UserNavMenu = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -46,7 +47,14 @@ const UserNavMenu = () => {
           <MenuItem onClick={handleClose}>Profile</MenuItem>
         </Link>
         <MenuItem onClick={handleClose}>Setting</MenuItem>
-        <MenuItem onClick={() => dispatch(logout())}>Logout</MenuItem>
+        <MenuItem
+          onClick={() => {
+            dispatch(logout());
+            navigate('/');
+          }}
+        >
+          Logout
+        </MenuItem>
       </Menu>
     </div>
   );
