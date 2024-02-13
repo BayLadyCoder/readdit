@@ -1,22 +1,19 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 
 import { useFetch } from '../customHooks/useFetch';
 import { baseURL } from '../resources/URLs';
-import { setUserPosts, logout } from '../reducers/userSlice';
-import { showNotificationAlert } from '../reducers/notificationsSlice';
+import { setUserPosts } from '../reducers/userSlice';
 
 import PostCardClassic from '../components/PostCardClassic/PostCardClassic';
-import AlertDialog from '../components/AlertDialog/AlertDialog';
+import DeleteAccountBtnDialog from '../components/DeleteAccountBtnDialog/DeleteAccountBtnDialog';
 
-function CustomTabPanel(props) {
+const CustomTabPanel = (props) => {
   const { children, value, index, ...other } = props;
 
   return (
@@ -28,34 +25,17 @@ function CustomTabPanel(props) {
       )}
     </div>
   );
-}
+};
 
 const Profile = () => {
   const [value, setValue] = useState(0);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  const [openDialog, setOpenDialog] = useState(false);
 
   const { isLoading, isError } = useFetch({
     url: `${baseURL}/api/users/${user.id}/posts`,
     dataHandler: (data) => dispatch(setUserPosts(data.posts)),
     immediate: user.id && user.posts === undefined,
-  });
-
-  const { fetchData: deleteAccount } = useFetch({
-    url: `${baseURL}/api/users/${user.id}`,
-    options: {
-      method: 'DELETE',
-    },
-    dataHandler: (data) => {
-      dispatch(
-        showNotificationAlert([{ message: data.message, type: 'success' }])
-      );
-      dispatch(logout());
-      navigate('/');
-    },
-    immediate: false,
   });
 
   const handleChangeTab = (event, newValue) => {
@@ -121,22 +101,7 @@ const Profile = () => {
           Cake Day: {`${user.cakeDay.month} ${user.cakeDay.datePrefix}`}
           <sup>{user.cakeDay.dateSuffix}</sup>, {user.cakeDay.year}
         </Typography>
-        <Button
-          color='error'
-          variant='outlined'
-          onClick={() => setOpenDialog(true)}
-        >
-          Delete Account
-        </Button>
-        <AlertDialog
-          open={openDialog}
-          setOpen={setOpenDialog}
-          handleClickConfirm={deleteAccount}
-          confirmBtnLabel='Delete Account'
-          confirmBtnColor='error'
-          dialogTitle='Are you sure you want to delete this account?'
-          dialogContent='This account will be deleted permanently.'
-        />
+        <DeleteAccountBtnDialog />
       </Box>
     </Stack>
   );
