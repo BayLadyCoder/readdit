@@ -5,6 +5,7 @@ export const saveUserDataToSS = (user) => {
       token: user.token,
       id: user.id,
       username: user.username,
+      cakeDay: user.cakeDay,
       isLoggedIn: true,
     })
   );

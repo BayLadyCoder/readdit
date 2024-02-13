@@ -80,6 +80,7 @@ const LoginOrSignupForm = ({ isLogin }) => {
               token: data.token,
               id: data.userId,
               username: data.username,
+              cakeDay: data.cakeDay,
             })
           );
         }
