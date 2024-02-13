@@ -1,29 +1,15 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 
-import { useFetch } from '../customHooks/useFetch';
-import { baseURL } from '../resources/URLs';
-import { setUserPosts } from '../reducers/userSlice';
-
-import PostCardClassic from '../components/PostCardClassic/PostCardClassic';
 import UserProfileInfo from '../components/UserProfileInfo/UserProfileInfo';
 import TabContentWrapper from '../components/TabContentWrapper/TabContentWrapper';
+import PostsTabContent from '../components/PostsTabContent/PostsTabContent';
 
 const Profile = () => {
   const [selectedTab, setSelectedTab] = useState(0);
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-
-  const { isLoading, isError } = useFetch({
-    url: `${baseURL}/api/users/${user.id}/posts`,
-    dataHandler: (data) => dispatch(setUserPosts(data.posts)),
-    immediate: user.id && user.posts === undefined,
-  });
 
   const handleChangeTab = (event, newTab) => {
     setSelectedTab(newTab);
@@ -52,19 +38,7 @@ const Profile = () => {
             <Tab sx={{ width: '130px' }} label='Downvoted' />
           </Tabs>
         </Box>
-        <TabContentWrapper selectedTab={selectedTab} index={0}>
-          {isLoading && <Typography align='center'>Loading...</Typography>}
-          {isError && <Typography align='center'>Failed to load.</Typography>}
-          {user.posts?.length === 0 ? (
-            <Typography align='center'>You have no post.</Typography>
-          ) : (
-            <Stack spacing={1}>
-              {user.posts?.map((post) => (
-                <PostCardClassic key={post._id} post={post} />
-              ))}
-            </Stack>
-          )}
-        </TabContentWrapper>
+        <PostsTabContent selectedTab={selectedTab} index={0} />
         <TabContentWrapper selectedTab={selectedTab} index={1}>
           Saved posts
         </TabContentWrapper>
