@@ -11,7 +11,7 @@ import { baseURL } from '../resources/URLs';
 import { setUserPosts } from '../reducers/userSlice';
 
 import PostCardClassic from '../components/PostCardClassic/PostCardClassic';
-import DeleteAccountBtnDialog from '../components/DeleteAccountBtnDialog/DeleteAccountBtnDialog';
+import UserProfileInfo from '../components/UserProfileInfo/UserProfileInfo';
 
 const CustomTabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -88,21 +88,7 @@ const Profile = () => {
           Downvoted posts
         </CustomTabPanel>
       </Box>
-      <Box
-        align='center'
-        sx={{
-          width: { sm: '100%', md: '25%' },
-          maxWidth: '400px',
-          background: '#fff',
-        }}
-      >
-        <Typography>{user.username}</Typography>
-        <Typography>
-          Cake Day: {`${user.cakeDay.month} ${user.cakeDay.datePrefix}`}
-          <sup>{user.cakeDay.dateSuffix}</sup>, {user.cakeDay.year}
-        </Typography>
-        <DeleteAccountBtnDialog />
-      </Box>
+      <UserProfileInfo />
     </Stack>
   );
 };
