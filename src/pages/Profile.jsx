@@ -14,6 +14,7 @@ import { setUserPosts, logout } from '../reducers/userSlice';
 import { showNotificationAlert } from '../reducers/notificationsSlice';
 
 import PostCardClassic from '../components/PostCardClassic/PostCardClassic';
+import AlertDialog from '../components/AlertDialog/AlertDialog';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -34,6 +35,7 @@ const Profile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  const [openDialog, setOpenDialog] = useState(false);
 
   const { isLoading, isError } = useFetch({
     url: `${baseURL}/api/users/${user.id}/posts`,
@@ -121,11 +123,20 @@ const Profile = () => {
         </Typography>
         <Button
           color='error'
-          variant='contained'
-          onClick={() => deleteAccount()}
+          variant='outlined'
+          onClick={() => setOpenDialog(true)}
         >
           Delete Account
         </Button>
+        <AlertDialog
+          open={openDialog}
+          setOpen={setOpenDialog}
+          handleClickConfirm={deleteAccount}
+          confirmBtnLabel='Delete Account'
+          confirmBtnColor='error'
+          dialogTitle='Are you sure you want to delete this account?'
+          dialogContent='This account will be deleted permanently.'
+        />
       </Box>
     </Stack>
   );
