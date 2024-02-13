@@ -74,16 +74,14 @@ const LoginOrSignupForm = ({ isLogin }) => {
         },
       },
       dataHandler: (data) => {
-        if (isLogin) {
-          dispatch(
-            login({
-              token: data.token,
-              id: data.userId,
-              username: data.username,
-              cakeDay: data.cakeDay,
-            })
-          );
-        }
+        dispatch(
+          login({
+            token: data.token,
+            id: data.userId,
+            username: data.username,
+            cakeDay: data.cakeDay,
+          })
+        );
         navigate('/');
       },
     });
