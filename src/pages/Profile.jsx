@@ -32,8 +32,8 @@ function CustomTabPanel(props) {
 const Profile = () => {
   const [value, setValue] = useState(0);
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
 
   const { isLoading, isError } = useFetch({
     url: `${baseURL}/api/users/${user.id}/posts`,
@@ -114,7 +114,11 @@ const Profile = () => {
           background: '#fff',
         }}
       >
-        <Typography>Profile</Typography>
+        <Typography>{user.username}</Typography>
+        <Typography>
+          Cake Day: {`${user.cakeDay.month} ${user.cakeDay.datePrefix}`}
+          <sup>{user.cakeDay.dateSuffix}</sup>, {user.cakeDay.year}
+        </Typography>
         <Button
           color='error'
           variant='contained'
