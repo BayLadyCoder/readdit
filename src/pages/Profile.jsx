@@ -12,23 +12,10 @@ import { setUserPosts } from '../reducers/userSlice';
 
 import PostCardClassic from '../components/PostCardClassic/PostCardClassic';
 import UserProfileInfo from '../components/UserProfileInfo/UserProfileInfo';
-
-const CustomTabPanel = (props) => {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div hidden={value !== index} {...other}>
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-};
+import TabContentWrapper from '../components/TabContentWrapper/TabContentWrapper';
 
 const Profile = () => {
-  const [value, setValue] = useState(0);
+  const [selectedTab, setSelectedTab] = useState(0);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
@@ -38,8 +25,8 @@ const Profile = () => {
     immediate: user.id && user.posts === undefined,
   });
 
-  const handleChangeTab = (event, newValue) => {
-    setValue(newValue);
+  const handleChangeTab = (event, newTab) => {
+    setSelectedTab(newTab);
   };
 
   return (
@@ -55,7 +42,7 @@ const Profile = () => {
       >
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs
-            value={value}
+            value={selectedTab}
             onChange={handleChangeTab}
             aria-label='basic tabs example'
           >
@@ -65,7 +52,7 @@ const Profile = () => {
             <Tab sx={{ width: '130px' }} label='Downvoted' />
           </Tabs>
         </Box>
-        <CustomTabPanel value={value} index={0}>
+        <TabContentWrapper selectedTab={selectedTab} index={0}>
           {isLoading && <Typography align='center'>Loading...</Typography>}
           {isError && <Typography align='center'>Failed to load.</Typography>}
           {user.posts?.length === 0 ? (
@@ -77,16 +64,16 @@ const Profile = () => {
               ))}
             </Stack>
           )}
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
+        </TabContentWrapper>
+        <TabContentWrapper selectedTab={selectedTab} index={1}>
           Saved posts
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={2}>
+        </TabContentWrapper>
+        <TabContentWrapper selectedTab={selectedTab} index={2}>
           Upvoted posts
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={3}>
+        </TabContentWrapper>
+        <TabContentWrapper selectedTab={selectedTab} index={3}>
           Downvoted posts
-        </CustomTabPanel>
+        </TabContentWrapper>
       </Box>
       <UserProfileInfo />
     </Stack>
