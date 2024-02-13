@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import AlertDialog from '../AlertDialog/AlertDialog';
 
-import { showNotificationAlert } from '../reducers/notificationsSlice';
-import { useFetch } from '../customHooks/useFetch';
-import { baseURL } from '../resources/URLs';
-import { logout } from '../reducers/userSlice';
+import { showNotificationAlert } from '../../reducers/notificationsSlice';
+import { useFetch } from '../../customHooks/useFetch';
+import { baseURL } from '../../resources/URLs';
+import { logout } from '../../reducers/userSlice';
 
 const DeleteAccountBtnDialog = () => {
   const dispatch = useDispatch();
