@@ -42,7 +42,7 @@ const PostCardClassic = ({ post }) => {
 
         <Box width='100%'>
           <Box>
-            <Typography variant='h6'>{post.title}</Typography>
+            <Typography>{post.title}</Typography>
             <Typography
               color='#888'
               variant='body2'
