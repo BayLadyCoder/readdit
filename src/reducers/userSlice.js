@@ -28,6 +28,8 @@ export const userSlice = createSlice({
       state.username = action.payload.username;
       state.cakeDay = action.payload.cakeDay;
       state.isLoggedIn = true;
+      const splittedUsername = action.payload.username.split('-');
+      state.avatarLabel = `${splittedUsername[0][0]}${splittedUsername[1][0]}`;
       saveUserDataToSS(action.payload);
     },
     logout: () => {

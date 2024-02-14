@@ -2,10 +2,7 @@ export const saveUserDataToSS = (user) => {
   sessionStorage.setItem(
     'user',
     JSON.stringify({
-      token: user.token,
-      _id: user._id,
-      username: user.username,
-      cakeDay: user.cakeDay,
+      ...user,
       isLoggedIn: true,
     })
   );

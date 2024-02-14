@@ -13,8 +13,6 @@ import DeleteAccountBtnDialog from '../DeleteAccountBtnDialog/DeleteAccountBtnDi
 
 const UserProfileInfo = () => {
   const user = useSelector((state) => state.user);
-  const splittedUsername = user.username.split('-');
-  const avatarLabel = `${splittedUsername[0][0]}${splittedUsername[1][0]}`;
 
   return (
     <Stack
@@ -37,7 +35,7 @@ const UserProfileInfo = () => {
             mb: '10px',
           }}
         >
-          {avatarLabel}
+          {user.avatarLabel}
         </Avatar>
         <Typography variant='h5'>{user.username}</Typography>
         <Typography variant='caption' color={grey[600]}>
