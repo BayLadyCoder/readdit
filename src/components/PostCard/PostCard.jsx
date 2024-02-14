@@ -28,9 +28,11 @@ const PostCard = ({ post }) => {
   const dispatch = useDispatch();
   const handleClick = (event) => {
     event.preventDefault();
+    event.stopPropagation();
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleClose = (event) => {
+    event.stopPropagation();
     setAnchorEl(null);
   };
   const user = useSelector((state) => state.user);
@@ -47,10 +49,8 @@ const PostCard = ({ post }) => {
   });
 
   const handleDeletePost = (event) => {
-    event.preventDefault();
-
     fetchDeletePost();
-    handleClose();
+    handleClose(event);
   };
 
   return (
