@@ -16,7 +16,7 @@ const DeleteAccountBtnDialog = () => {
   const user = useSelector((state) => state.user);
 
   const { fetchData: deleteAccount } = useFetch({
-    url: `${baseURL}/api/users/${user.id}`,
+    url: `${baseURL}/api/users/${user._id}`,
     options: {
       method: 'DELETE',
     },

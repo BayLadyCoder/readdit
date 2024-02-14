@@ -3,7 +3,7 @@ export const saveUserDataToSS = (user) => {
     'user',
     JSON.stringify({
       token: user.token,
-      id: user.id,
+      _id: user._id,
       username: user.username,
       cakeDay: user.cakeDay,
       isLoggedIn: true,

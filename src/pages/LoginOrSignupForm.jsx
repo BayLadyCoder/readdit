@@ -77,7 +77,7 @@ const LoginOrSignupForm = ({ isLogin }) => {
         dispatch(
           login({
             token: data.token,
-            id: data.userId,
+            _id: data.userId,
             username: data.username,
             cakeDay: data.cakeDay,
           })

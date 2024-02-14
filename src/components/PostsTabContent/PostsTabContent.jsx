@@ -13,9 +13,9 @@ const PostsTabContent = ({ selectedTab }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const { isLoading, isError } = useFetch({
-    url: `${baseURL}/api/users/${user.id}/posts`,
+    url: `${baseURL}/api/users/${user._id}/posts`,
     dataHandler: (data) => dispatch(setUserPosts(data.posts)),
-    immediate: user.id && user.posts === undefined,
+    immediate: user._id && user.posts === undefined,
   });
 
   return (

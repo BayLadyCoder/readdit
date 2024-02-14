@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   token: undefined,
-  id: undefined,
+  _id: undefined,
   username: undefined,
   isLoggedIn: false,
   posts: undefined,
@@ -24,7 +24,7 @@ export const userSlice = createSlice({
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
       state.token = action.payload.token;
-      state.id = action.payload.id;
+      state._id = action.payload._id;
       state.username = action.payload.username;
       state.cakeDay = action.payload.cakeDay;
       state.isLoggedIn = true;
