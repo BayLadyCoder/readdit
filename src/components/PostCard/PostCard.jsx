@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardActions from '@mui/material/CardActions';
+import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { timeAgo } from '../../helpers/timeAgo';
@@ -72,6 +74,8 @@ const PostCard = ({ post }) => {
               </IconButton>
             )
           }
+          titleTypographyProps={{ fontWeight: '500', fontSize: '20px' }}
+          subheaderTypographyProps={{ variant: 'body2', fontSize: '12px' }}
           title={post.title}
           subheader={`Posted by ${post.author.username} ${timeAgo(
             post.createdAt
@@ -108,26 +112,71 @@ const PostCard = ({ post }) => {
               component='img'
               image={`${baseURL}/${post.imageUrl}`}
               alt='Post image'
-              sx={{ objectFit: 'contain', maxWidth: { sm: 300, md: 400 } }}
+              sx={{
+                objectFit: 'contain',
+                maxWidth: { sm: 300, md: 400 },
+                maxHeight: 300,
+              }}
             />
           </Stack>
         ) : (
-          <CardContent sx={{ pt: 0 }}>
-            <Typography width='100%'>{post.content}</Typography>
-          </CardContent>
+          <Stack sx={{ position: 'relative' }}>
+            <Box
+              sx={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background:
+                  'linear-gradient(to bottom,rgba(250,250,250,0.1), white)',
+                width: '100%',
+                height: '100%',
+                zIndex: 2,
+              }}
+            ></Box>
+            <CardContent
+              sx={{
+                pt: 0,
+                maxHeight: 300,
+                whiteSpace: 'break-spaces',
+                overflow: 'hidden',
+                textAlign: 'justify',
+              }}
+            >
+              <Typography width='100%'>{post.content}</Typography>
+            </CardContent>
+          </Stack>
         )}
 
         <CardActions>
-          <IconButton aria-label='add to favorites' size='small'>
-            <ModeCommentOutlinedIcon sx={{ mr: '5px' }} />
+          <Button
+            aria-label='add to favorites'
+            size='small'
+            sx={{ fontSize: '12px', fontWeight: 'bold', color: '#777' }}
+          >
+            <ModeCommentOutlinedIcon sx={{ mr: '5px', color: '#aaa' }} />
             58 Comments
-          </IconButton>
-          <IconButton aria-label='add to favorites' size='small'>
-            <BookmarkBorderOutlinedIcon sx={{ mr: '5px' }} /> Save
-          </IconButton>
-          <IconButton aria-label='share' size='small'>
-            <ShareOutlinedIcon sx={{ mr: '5px' }} /> Share
-          </IconButton>
+          </Button>
+          <Button
+            aria-label='add to favorites'
+            size='small'
+            sx={{
+              fontSize: '12px',
+              fontWeight: 'bold',
+              color: '#777',
+            }}
+          >
+            <BookmarkBorderOutlinedIcon sx={{ mr: '5px', color: '#aaa' }} />{' '}
+            Save
+          </Button>
+          <Button
+            aria-label='share'
+            size='small'
+            sx={{ fontSize: '12px', fontWeight: 'bold', color: '#777' }}
+          >
+            <ShareOutlinedIcon sx={{ mr: '5px', color: '#aaa' }} /> Share
+          </Button>
         </CardActions>
       </Card>
     </Link>
