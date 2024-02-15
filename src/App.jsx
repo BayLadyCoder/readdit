@@ -48,13 +48,15 @@ const App = () => {
             justifyContent='space-between'
             alignItems='center'
           >
-            <Link to={user.isLoggedIn ? `/posts/new` : '/login'}>
-              <Button variant='contained'>
-                <AddIcon sx={{ mr: '5px' }} /> New Post
-              </Button>
-            </Link>
             {user.isLoggedIn ? (
-              <UserNavMenu />
+              <>
+                <Link to='/posts/new'>
+                  <Button variant='contained'>
+                    <AddIcon sx={{ mr: '5px' }} /> New Post
+                  </Button>
+                </Link>
+                <UserNavMenu />
+              </>
             ) : (
               <Link to='/login'>
                 <Button variant='contained'>Login</Button>
