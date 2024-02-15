@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
+import AppBar from '@mui/material/AppBar';
+import AddIcon from '@mui/icons-material/Add';
 
 import Feed from './pages/Feed';
 import Post from './pages/Post';
@@ -29,31 +31,41 @@ const App = () => {
 
   return (
     <Stack>
-      <Stack
-        direction='row'
-        justifyContent='space-between'
-        alignItems='center'
-        sx={{ borderBottom: '1px solid #dddddd', width: '100%' }}
-      >
-        <Link to='/' style={{ textDecoration: 'none', color: 'inherit' }}>
-          <Typography variant='h5' component='h1'>
-            &#129299; Readdit
-          </Typography>
-        </Link>
-        <Link to={user.isLoggedIn ? `/posts/new` : '/login'}>
-          <Button variant='contained'>+ New Post</Button>
-        </Link>
-        {user.isLoggedIn ? (
-          <UserNavMenu />
-        ) : (
-          <Link to='/login'>
-            <Button variant='contained'>Login</Button>
+      <AppBar position='fixed' sx={{ bgcolor: '#fff' }}>
+        <Stack
+          direction='row'
+          justifyContent='space-between'
+          alignItems='center'
+          px={2}
+        >
+          <Link to='/' style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Typography sx={{ color: '#000' }} variant='h5' component='h1'>
+              &#129299; Readdit
+            </Typography>
           </Link>
-        )}
-      </Stack>
+          <Stack
+            direction='row'
+            justifyContent='space-between'
+            alignItems='center'
+          >
+            <Link to={user.isLoggedIn ? `/posts/new` : '/login'}>
+              <Button variant='contained'>
+                <AddIcon sx={{ mr: '5px' }} /> New Post
+              </Button>
+            </Link>
+            {user.isLoggedIn ? (
+              <UserNavMenu />
+            ) : (
+              <Link to='/login'>
+                <Button variant='contained'>Login</Button>
+              </Link>
+            )}
+          </Stack>
+        </Stack>
+      </AppBar>
       <Stack
         alignItems='center'
-        sx={{ p: 2, background: '#eee', minHeight: '100vh' }}
+        sx={{ background: '#eee', minHeight: '100vh', pt: '60px' }}
       >
         <NotificationAlert />
         <Routes>
