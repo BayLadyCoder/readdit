@@ -1,4 +1,4 @@
-import { mayAddS } from './mayAddS';
+import { getSIfPlural } from './getSIfPlural';
 
 export const timeAgo = (dateParam) => {
   if (!dateParam) {
@@ -20,16 +20,16 @@ export const timeAgo = (dateParam) => {
   } else if (seconds < 60) {
     return `${seconds} seconds ago`;
   } else if (minutes < 60) {
-    return `${minutes} minute${mayAddS(minutes)} ago`;
+    return `${minutes} minute${getSIfPlural(minutes)} ago`;
   } else if (hours < 24) {
-    return `${hours} hour${mayAddS(hours)} ago`;
+    return `${hours} hour${getSIfPlural(hours)} ago`;
   } else if (days < 7) {
-    return `${days} day${mayAddS(days)} ago`;
+    return `${days} day${getSIfPlural(days)} ago`;
   } else if (weeks < 4) {
-    return `${weeks} week${mayAddS(weeks)} ago`;
+    return `${weeks} week${getSIfPlural(weeks)} ago`;
   } else if (months < 12) {
-    return `${months} month${mayAddS(months)} ago`;
+    return `${months} month${getSIfPlural(months)} ago`;
   }
 
-  return `${years} year${mayAddS(years)} ago`;
+  return `${years} year${getSIfPlural(years)} ago`;
 };
