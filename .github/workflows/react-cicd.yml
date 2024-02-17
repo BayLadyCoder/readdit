@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Run ESLint
-        run: npm run eslint . --ext .js,.jsx
+        run: npx eslint . --ext .js,.jsx
       - name: Test
         run: npm run test
       - name: Build
