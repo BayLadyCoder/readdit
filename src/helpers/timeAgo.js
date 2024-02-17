@@ -1,12 +1,18 @@
 import { getSIfPlural } from './getSIfPlural';
 
-export const timeAgo = (dateParam) => {
-  if (!dateParam) {
-    return null;
-  }
+export const invalidDateErrorMessage = 'Invalid date.';
+export const futureDateErrorMessage = 'Date must be in the past.';
 
+export const timeAgo = (dateParam) => {
   const date = typeof dateParam === 'object' ? dateParam : new Date(dateParam);
   const today = new Date();
+
+  if (!date || !date.getTime || !date.getTime() || isNaN(date.getTime())) {
+    throw new Error(invalidDateErrorMessage);
+  } else if (date > today) {
+    throw new Error(futureDateErrorMessage);
+  }
+
   const seconds = Math.round((today - date) / 1000);
   const minutes = Math.round(seconds / 60);
   const hours = Math.round(minutes / 60);
