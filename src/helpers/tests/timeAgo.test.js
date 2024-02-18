@@ -42,8 +42,6 @@ test('input future date, should throw error', () => {
   expect(() => timeAgo('2038-11-30')).toThrow(futureDateErrorMessage);
 });
 
-new Date();
-
 test('valid input, should return ... ago', () => {
   expect(timeAgo('2023-12-31T23:59:56')).toBe('a few seconds ago');
   expect(timeAgo('2023-12-31T23:59:55')).toBe('5 seconds ago');
