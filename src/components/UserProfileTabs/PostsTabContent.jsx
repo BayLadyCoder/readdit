@@ -7,7 +7,7 @@ import { baseURL } from '../../resources/URLs';
 import { setUserPosts } from '../../reducers/userSlice';
 
 import PostCardClassic from '../PostCardClassic/PostCardClassic';
-import TabContentWrapper from '../TabContentWrapper/TabContentWrapper';
+import TabContentWrapper from './TabContentWrapper';
 
 const PostsTabContent = ({ selectedTab }) => {
   const dispatch = useDispatch();

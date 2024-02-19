@@ -3,8 +3,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 
-import TabContentWrapper from '../TabContentWrapper/TabContentWrapper';
-import PostsTabContent from '../PostsTabContent/PostsTabContent';
+import TabContentWrapper from './TabContentWrapper';
+import PostsTabContent from './PostsTabContent';
 
 const UserProfileTabs = () => {
   const [selectedTab, setSelectedTab] = useState(0);
