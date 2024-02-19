@@ -7,13 +7,9 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardActions from '@mui/material/CardActions';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { timeAgo } from '../../helpers/timeAgo';
-import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -23,6 +19,7 @@ import { useFetch } from '../../customHooks/useFetch';
 import { deletePost } from '../../reducers/postsSlice.js';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
+import PostActionFooter from '../PostActionFooter/PostActionFooter';
 
 const PostCard = ({ post }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -144,39 +141,20 @@ const PostCard = ({ post }) => {
                 textAlign: 'justify',
               }}
             >
-              <Typography width='100%'>{post.content}</Typography>
+              <Typography
+                sx={{
+                  fontFamily: 'Noto Sans',
+                }}
+                width='100%'
+              >
+                {post.content}
+              </Typography>
             </CardContent>
           </Stack>
         )}
 
         <CardActions>
-          <Button
-            aria-label='add to favorites'
-            size='small'
-            sx={{ fontSize: '12px', fontWeight: 'bold', color: '#777' }}
-          >
-            <ModeCommentOutlinedIcon sx={{ mr: '5px', color: '#aaa' }} />
-            58 Comments
-          </Button>
-          <Button
-            aria-label='add to favorites'
-            size='small'
-            sx={{
-              fontSize: '12px',
-              fontWeight: 'bold',
-              color: '#777',
-            }}
-          >
-            <BookmarkBorderOutlinedIcon sx={{ mr: '5px', color: '#aaa' }} />{' '}
-            Save
-          </Button>
-          <Button
-            aria-label='share'
-            size='small'
-            sx={{ fontSize: '12px', fontWeight: 'bold', color: '#777' }}
-          >
-            <ShareOutlinedIcon sx={{ mr: '5px', color: '#aaa' }} /> Share
-          </Button>
+          <PostActionFooter />
         </CardActions>
       </Card>
     </Link>
