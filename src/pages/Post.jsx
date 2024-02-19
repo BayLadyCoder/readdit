@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -16,13 +15,10 @@ const Post = () => {
     url: createPostURLByPostId(postId),
     immediate: true,
   });
-  const username = useSelector((state) => state.user.username);
 
   if (isError) return <h1>Failed to load</h1>;
   if (isLoading) return <h1>Loading...</h1>;
   if (!data) return <h1>No post found</h1>;
-
-  const isAuthor = data.post.author.username === username;
 
   return (
     <Paper
@@ -62,7 +58,7 @@ const Post = () => {
           </Typography>
         )}
       </Stack>
-      <PostActionFooter isAuthor={isAuthor} />
+      <PostActionFooter post={data.post} showAuthorActionIcon />
     </Paper>
   );
 };

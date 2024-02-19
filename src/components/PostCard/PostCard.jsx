@@ -154,7 +154,7 @@ const PostCard = ({ post }) => {
         )}
 
         <CardActions>
-          <PostActionFooter />
+          <PostActionFooter post={post} />
         </CardActions>
       </Card>
     </Link>
