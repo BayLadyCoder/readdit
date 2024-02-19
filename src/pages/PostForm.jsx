@@ -95,10 +95,11 @@ const PostForm = () => {
       dataHandler: (data) => {
         if (method === 'POST') {
           dispatch(setPosts([data.post, ...posts]));
+          navigate('/');
         } else if (method === 'PUT') {
           dispatch(updatePost(data.post));
+          navigate(`/posts/${data.post._id}`);
         }
-        navigate('/');
       },
     });
   };

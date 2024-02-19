@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
@@ -27,10 +27,6 @@ const AuthorMoreActionButton = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const handleClickEdit = () => {
-    handleClose();
   };
 
   const { fetchData: fetchDeletePost } = useFetch({
@@ -69,9 +65,15 @@ const AuthorMoreActionButton = () => {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem key='edit' onClick={handleClickEdit}>
-          <EditIcon sx={{ mr: '5px' }} /> Edit
-        </MenuItem>
+        <Link
+          to={`/posts/${post._id}/edit`}
+          style={{ textDecoration: 'none', color: 'inherit' }}
+        >
+          <MenuItem onClick={handleClose}>
+            <EditIcon sx={{ mr: '5px' }} size='small' />
+            Edit
+          </MenuItem>
+        </Link>
         <MenuItem key='delete' onClick={handleClickDelete}>
           <DeleteIcon sx={{ mr: '5px' }} /> Delete
         </MenuItem>
