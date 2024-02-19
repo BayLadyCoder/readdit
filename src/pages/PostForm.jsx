@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -116,84 +117,86 @@ const PostForm = () => {
   if (isError) return <div>Failed to fetch data</div>;
 
   return (
-    <FormControl sx={{ padding: '20px', gap: '10px', width: '600px' }}>
-      <TextField
-        error={validationError.title}
-        onBlur={() => validateForm('title')}
-        name='title'
-        label='Title'
-        variant='outlined'
-        value={form.title}
-        onChange={handleFormChange}
-        helperText={validationError.title ? 'Required' : ''}
-      />
-      <Box
-        w='100%'
-        display='flex'
-        flexDirection='column'
-        alignItems='center'
-        gap='10px'
-      >
-        <Button
-          sx={{
-            ':hover': {
-              backgroundColor: 'rgba(25, 118, 210, 0.1)',
-            },
-            backgroundColor: 'rgba(25, 118, 210, 0.07)',
-            padding: '30px 20px',
-            border: validationError.image ? '1px solid red' : 'none',
-            width: '100%',
-          }}
-          onClick={() => inputFileRef.current.click()}
+    <Paper>
+      <FormControl sx={{ padding: '20px', gap: '10px', width: '600px' }}>
+        <TextField
+          error={validationError.title}
+          onBlur={() => validateForm('title')}
+          name='title'
+          label='Title'
+          variant='outlined'
+          value={form.title}
+          onChange={handleFormChange}
+          helperText={validationError.title ? 'Required' : ''}
+        />
+        <Box
+          w='100%'
+          display='flex'
+          flexDirection='column'
+          alignItems='center'
+          gap='10px'
         >
-          <input
-            type='file'
-            name='imageUrl'
-            accept='image/png, image/jpeg'
-            ref={inputFileRef}
-            onChange={handleFormChange}
-            hidden
-          />
-          <ImageIcon sx={{ marginRight: '5px' }} />
-          Add Image
-        </Button>
-        {form.imageSrc && (
-          <Stack direction='row' alignItems='flex-start'>
-            <img
-              style={{ maxWidth: '400px', maxHeight: '250px' }}
-              src={form.imageSrc}
-              alt={form.title}
-              loading='lazy'
+          <Button
+            sx={{
+              ':hover': {
+                backgroundColor: 'rgba(25, 118, 210, 0.1)',
+              },
+              backgroundColor: 'rgba(25, 118, 210, 0.07)',
+              padding: '30px 20px',
+              border: validationError.image ? '1px solid red' : 'none',
+              width: '100%',
+            }}
+            onClick={() => inputFileRef.current.click()}
+          >
+            <input
+              type='file'
+              name='imageUrl'
+              accept='image/png, image/jpeg'
+              ref={inputFileRef}
+              onChange={handleFormChange}
+              hidden
             />
-            <IconButton
-              onClick={removeImageFromForm}
-              sx={{
-                left: '-40px',
-                top: '0px',
-                zIndex: 10,
-              }}
-            >
-              <ClearIcon />
-            </IconButton>
-          </Stack>
-        )}
-      </Box>
-      <TextField
-        error={validationError.content}
-        onBlur={() => validateForm('content')}
-        name='content'
-        label='Content'
-        variant='outlined'
-        multiline
-        rows={5}
-        value={form.content}
-        onChange={handleFormChange}
-        helperText={validationError.content ? 'Required' : ''}
-      />
-      <Button variant='contained' type='submit' onClick={handleSubmit}>
-        Post
-      </Button>
-    </FormControl>
+            <ImageIcon sx={{ marginRight: '5px' }} />
+            Add Image
+          </Button>
+          {form.imageSrc && (
+            <Stack direction='row' alignItems='flex-start'>
+              <img
+                style={{ maxWidth: '400px', maxHeight: '250px' }}
+                src={form.imageSrc}
+                alt={form.title}
+                loading='lazy'
+              />
+              <IconButton
+                onClick={removeImageFromForm}
+                sx={{
+                  left: '-40px',
+                  top: '0px',
+                  zIndex: 10,
+                }}
+              >
+                <ClearIcon />
+              </IconButton>
+            </Stack>
+          )}
+        </Box>
+        <TextField
+          error={validationError.content}
+          onBlur={() => validateForm('content')}
+          name='content'
+          label='Content'
+          variant='outlined'
+          multiline
+          rows={5}
+          value={form.content}
+          onChange={handleFormChange}
+          helperText={validationError.content ? 'Required' : ''}
+        />
+        <Button variant='contained' type='submit' onClick={handleSubmit}>
+          Post
+        </Button>
+      </FormControl>
+    </Paper>
   );
 };
 
