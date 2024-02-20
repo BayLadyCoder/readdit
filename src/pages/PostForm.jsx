@@ -170,12 +170,23 @@ const PostForm = () => {
               <IconButton
                 onClick={removeImageFromForm}
                 sx={{
-                  left: '-40px',
-                  top: '0px',
+                  p: '3px',
+                  backgroundColor: '#fff',
+                  left: '-5px',
+                  top: '-10px',
                   zIndex: 10,
+                  margin: '10px',
+                  border: '2px solid #1976d2',
+                  color: '#1976d2',
+
+                  '&:hover': {
+                    color: '#c20000',
+                    border: '2px solid #c20000',
+                    backgroundColor: '#ffe0e0',
+                  },
                 }}
               >
-                <ClearIcon />
+                <ClearIcon sx={{ fontSize: '20px' }} />
               </IconButton>
             </Stack>
           )}
