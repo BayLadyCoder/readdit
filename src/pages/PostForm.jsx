@@ -157,7 +157,7 @@ const PostForm = () => {
               hidden
             />
             <ImageIcon sx={{ marginRight: '5px' }} />
-            Add Image
+            {form.imageSrc ? 'Replace Image' : 'Add Image'}
           </Button>
           {form.imageSrc && (
             <Stack direction='row' alignItems='flex-start'>
