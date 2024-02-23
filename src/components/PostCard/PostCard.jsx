@@ -3,10 +3,8 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
+import Paper from '@mui/material/Paper';
 import CardMedia from '@mui/material/CardMedia';
-import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { timeAgo } from '../../helpers/timeAgo';
@@ -18,7 +16,6 @@ import { baseURL, createPostURLByPostId } from '../../resources/URLs.js';
 import { useFetch } from '../../customHooks/useFetch';
 import { deletePost } from '../../reducers/postsSlice.js';
 import Typography from '@mui/material/Typography';
-import CardContent from '@mui/material/CardContent';
 import PostActionFooter from '../PostActionFooter/PostActionFooter';
 
 const PostCard = ({ post }) => {
@@ -54,12 +51,42 @@ const PostCard = ({ post }) => {
 
   return (
     <Link to={`/posts/${post._id}`} style={{ textDecoration: 'none' }}>
-      <Card sx={{ width: { xs: 345, sm: 500, md: 600 } }}>
-        <CardHeader
-          action={
-            loggedInUserIsPostAuthor && (
+      <Paper
+        sx={{
+          width: {
+            xs: 345,
+            sm: 500,
+            md: 600,
+            marginBottom: 10,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 8,
+            padding: '10px 4px 6px 12px',
+          },
+        }}
+      >
+        <Stack
+          pb={1}
+          spacing={1}
+          direction='row'
+          justifyContent='space-between'
+          alignItems='flex-start'
+        >
+          <Box>
+            <Typography sx={{ fontWeight: '500', fontSize: '20px' }}>
+              {post.title}
+            </Typography>
+            <Typography
+              variant='body2'
+              sx={{ fontSize: '12px', color: '#555' }}
+            >
+              {`Posted by ${post.author.username} ${timeAgo(post.createdAt)}`}
+            </Typography>
+          </Box>
+          {loggedInUserIsPostAuthor && (
+            <Box>
               <IconButton
-                sx={{ zIndex: 100 }}
+                sx={{ zIndex: 100, top: -5 }}
                 aria-label='settings'
                 id='basic-button'
                 aria-controls={open ? 'basic-menu' : undefined}
@@ -69,45 +96,37 @@ const PostCard = ({ post }) => {
               >
                 <MoreVertIcon />
               </IconButton>
-            )
-          }
-          titleTypographyProps={{ fontWeight: '500', fontSize: '20px' }}
-          subheaderTypographyProps={{ variant: 'body2', fontSize: '12px' }}
-          title={post.title}
-          subheader={`Posted by ${post.author.username} ${timeAgo(
-            post.createdAt
-          )}`}
-        />
-        {loggedInUserIsPostAuthor && (
-          <Menu
-            id='basic-menu'
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              'aria-labelledby': 'basic-button',
-            }}
-          >
-            <Link
-              to={`posts/${post._id}/edit`}
-              style={{ textDecoration: 'none', color: 'inherit' }}
-            >
-              <MenuItem onClick={handleClose}>
-                <EditIcon sx={{ mr: '5px' }} size='small' />
-                Edit
-              </MenuItem>
-            </Link>
-            <MenuItem onClick={handleDeletePost}>
-              <DeleteOutlinedIcon sx={{ mr: '5px' }} size='small' />
-              Delete
-            </MenuItem>
-          </Menu>
-        )}
+              <Menu
+                id='basic-menu'
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                  'aria-labelledby': 'basic-button',
+                }}
+              >
+                <Link
+                  to={`posts/${post._id}/edit`}
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
+                  <MenuItem onClick={handleClose}>
+                    <EditIcon sx={{ mr: '5px' }} size='small' />
+                    Edit
+                  </MenuItem>
+                </Link>
+                <MenuItem onClick={handleDeletePost}>
+                  <DeleteOutlinedIcon sx={{ mr: '5px' }} size='small' />
+                  Delete
+                </MenuItem>
+              </Menu>
+            </Box>
+          )}
+        </Stack>
         {post.imageUrl ? (
           <Stack direction='row' justifyContent='center'>
             <CardMedia
               component='img'
-              image={`${baseURL}/${post.imageUrl}`}
+              src={`${baseURL}/${post.imageUrl}`}
               alt='Post image'
               sx={{
                 objectFit: 'contain',
@@ -132,8 +151,9 @@ const PostCard = ({ post }) => {
                 zIndex: 2,
               }}
             ></Box>
-            <CardContent
+            <Box
               sx={{
+                p: '16px',
                 pt: 0,
                 maxHeight: 300,
                 whiteSpace: 'break-spaces',
@@ -149,14 +169,11 @@ const PostCard = ({ post }) => {
               >
                 {post.content}
               </Typography>
-            </CardContent>
+            </Box>
           </Stack>
         )}
-
-        <CardActions>
-          <PostActionFooter post={post} />
-        </CardActions>
-      </Card>
+        <PostActionFooter post={post} />
+      </Paper>
     </Link>
   );
 };
