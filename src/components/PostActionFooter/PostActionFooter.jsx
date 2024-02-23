@@ -7,43 +7,42 @@ import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 
 import PostActionFooterButton from './PostActionFooterButton';
 import AuthorMoreActionButton from './AuthorMoreActionButton';
-import { PostContext } from '../../context/PostContext';
 
 const PostActionFooter = ({ post, showAuthorActionIcon }) => {
   const username = useSelector((state) => state.user.username);
   const isAuthor = username === post.author.username;
   return (
-    <PostContext.Provider value={post}>
-      <Stack direction='row' justifyContent='space-between'>
-        <Box>
-          <PostActionFooterButton
-            areaLabel='comments'
-            buttonLabel='58 Comments'
-            Icon={ModeCommentOutlinedIcon}
-            onClickFn={() => {
-              return;
-            }}
-          />
-          <PostActionFooterButton
-            areaLabel='save this post'
-            buttonLabel='Save'
-            Icon={BookmarkBorderOutlinedIcon}
-            onClickFn={() => {
-              return;
-            }}
-          />
-          <PostActionFooterButton
-            areaLabel='share this post'
-            buttonLabel='Share'
-            Icon={ShareOutlinedIcon}
-            onClickFn={() => {
-              return;
-            }}
-          />
-        </Box>
-        {isAuthor && showAuthorActionIcon && <AuthorMoreActionButton />}
-      </Stack>
-    </PostContext.Provider>
+    <Stack direction='row' justifyContent='space-between'>
+      <Box>
+        <PostActionFooterButton
+          areaLabel='comments'
+          buttonLabel='58 Comments'
+          Icon={ModeCommentOutlinedIcon}
+          onClickFn={() => {
+            return;
+          }}
+        />
+        <PostActionFooterButton
+          areaLabel='save this post'
+          buttonLabel='Save'
+          Icon={BookmarkBorderOutlinedIcon}
+          onClickFn={() => {
+            return;
+          }}
+        />
+        <PostActionFooterButton
+          areaLabel='share this post'
+          buttonLabel='Share'
+          Icon={ShareOutlinedIcon}
+          onClickFn={() => {
+            return;
+          }}
+        />
+      </Box>
+      {isAuthor && showAuthorActionIcon && (
+        <AuthorMoreActionButton post={post} />
+      )}
+    </Stack>
   );
 };
 
