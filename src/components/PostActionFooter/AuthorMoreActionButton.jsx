@@ -1,5 +1,5 @@
-import { useState, useContext } from 'react';
-import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
@@ -8,26 +8,20 @@ import MenuItem from '@mui/material/MenuItem';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import { createPostURLByPostId } from '../../resources/URLs.js';
 import { useFetch } from '../../customHooks/useFetch';
 import { deletePost } from '../../reducers/postsSlice.js';
-import { PostContext } from '../../context/PostContext';
 
-const AuthorMoreActionButton = () => {
+const AuthorMoreActionButton = ({ post, forHeader }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const post = useContext(PostContext);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const user = useSelector((state) => state.user);
+  const loggedInUserIsPostAuthor =
+    user.isLoggedIn && user._id === post.author._id;
 
   const { fetchData: fetchDeletePost } = useFetch({
     url: createPostURLByPostId(post._id),
@@ -38,14 +32,29 @@ const AuthorMoreActionButton = () => {
     immediate: false,
   });
 
-  const handleClickDelete = () => {
+  const handleClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setAnchorEl(e.currentTarget);
+  };
+
+  const handleClose = (e) => {
+    e.stopPropagation();
+    setAnchorEl(null);
+  };
+
+  const handleClickDelete = (e) => {
     fetchDeletePost();
-    handleClose();
+    handleClose(e);
     navigate('/');
   };
 
+  if (!loggedInUserIsPostAuthor) {
+    return null;
+  }
+
   return (
-    <Box>
+    <Box sx={{ zIndex: 100, top: forHeader ? -5 : 0 }}>
       <IconButton
         aria-label='more'
         id='long-button'
@@ -54,7 +63,7 @@ const AuthorMoreActionButton = () => {
         aria-haspopup='true'
         onClick={handleClick}
       >
-        <MoreHorizIcon />
+        {forHeader ? <MoreVertIcon /> : <MoreHorizIcon />}
       </IconButton>
       <Menu
         id='long-menu'
