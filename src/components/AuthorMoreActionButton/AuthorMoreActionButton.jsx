@@ -11,7 +11,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import { createPostURLByPostId } from '../../resources/URLs.js';
-import { useFetch } from '../../customHooks/useFetch';
+import { useFetch } from '../../customHooks/useFetch.jsx';
 import { deletePost } from '../../reducers/postsSlice.js';
 
 const AuthorMoreActionButton = ({ post, forHeader }) => {

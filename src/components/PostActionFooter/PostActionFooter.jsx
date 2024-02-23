@@ -6,7 +6,7 @@ import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlin
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 
 import PostActionFooterButton from './PostActionFooterButton';
-import AuthorMoreActionButton from './AuthorMoreActionButton';
+import AuthorMoreActionButton from '../AuthorMoreActionButton/AuthorMoreActionButton';
 
 const PostActionFooter = ({ post, showAuthorActionIcon }) => {
   const username = useSelector((state) => state.user.username);

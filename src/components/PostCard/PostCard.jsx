@@ -9,7 +9,7 @@ import { timeAgo } from '../../helpers/timeAgo';
 import { baseURL } from '../../resources/URLs.js';
 import { PostContext } from '../../context/PostContext';
 import PostActionFooter from '../PostActionFooter/PostActionFooter';
-import AuthorMoreActionButton from '../PostActionFooter/AuthorMoreActionButton';
+import AuthorMoreActionButton from '../AuthorMoreActionButton/AuthorMoreActionButton.jsx';
 
 const PostCard = ({ post }) => {
   return (
