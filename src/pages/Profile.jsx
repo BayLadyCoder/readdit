@@ -6,9 +6,9 @@ import UserProfileTabs from '../components/UserProfileTabs/UserProfileTabs';
 const Profile = () => {
   return (
     <Stack
-      direction={{ sm: 'column-reverse', md: 'row' }}
+      direction={{ xs: 'column-reverse', md: 'row' }}
       justifyContent='center'
-      alignItems={{ sm: 'center', md: 'flex-start' }}
+      alignItems={{ xs: 'center', md: 'flex-start' }}
       spacing={5}
       sx={{ width: '100%' }}
     >
