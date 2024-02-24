@@ -5,11 +5,10 @@ import Paper from '@mui/material/Paper';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 
-import { timeAgo } from '../../helpers/timeAgo';
 import { baseURL } from '../../resources/URLs.js';
 import { PostContext } from '../../context/PostContext';
 import PostActionFooter from '../PostActionFooter/PostActionFooter';
-import AuthorMoreActionButton from '../AuthorMoreActionButton/AuthorMoreActionButton.jsx';
+import PostCardHeader from './PostCardHeader';
 
 const PostCard = ({ post }) => {
   return (
@@ -29,26 +28,7 @@ const PostCard = ({ post }) => {
             },
           }}
         >
-          <Stack
-            pb={1}
-            spacing={1}
-            direction='row'
-            justifyContent='space-between'
-            alignItems='flex-start'
-          >
-            <Box>
-              <Typography sx={{ fontWeight: '500', fontSize: '20px' }}>
-                {post.title}
-              </Typography>
-              <Typography
-                variant='body2'
-                sx={{ fontSize: '12px', color: '#555' }}
-              >
-                {`Posted by ${post.author.username} ${timeAgo(post.createdAt)}`}
-              </Typography>
-            </Box>
-            <AuthorMoreActionButton post={post} forHeader />
-          </Stack>
+          <PostCardHeader post={post} />
           {post.imageUrl ? (
             <Stack direction='row' justifyContent='center'>
               <CardMedia
