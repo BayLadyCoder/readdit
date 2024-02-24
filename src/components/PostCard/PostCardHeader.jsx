@@ -1,11 +1,15 @@
+import { useContext } from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import { timeAgo } from '../../helpers/timeAgo';
+import { PostContext } from '../../context/PostContext';
 import AuthorMoreActionButton from '../AuthorMoreActionButton/AuthorMoreActionButton.jsx';
 
-const PostCardHeader = ({ post }) => {
+const PostCardHeader = () => {
+  const post = useContext(PostContext);
+
   return (
     <Stack
       pb={1}

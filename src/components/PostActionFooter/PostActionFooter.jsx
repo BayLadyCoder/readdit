@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
@@ -7,10 +8,13 @@ import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 
 import PostActionFooterButton from './PostActionFooterButton';
 import AuthorMoreActionButton from '../AuthorMoreActionButton/AuthorMoreActionButton';
+import { PostContext } from '../../context/PostContext';
 
-const PostActionFooter = ({ post, showAuthorActionIcon }) => {
+const PostActionFooter = ({ showAuthorActionIcon }) => {
+  const post = useContext(PostContext);
   const username = useSelector((state) => state.user.username);
   const isAuthor = username === post.author.username;
+
   return (
     <Stack direction='row' justifyContent='space-between'>
       <Box>

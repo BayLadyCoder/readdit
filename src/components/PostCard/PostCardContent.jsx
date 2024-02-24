@@ -1,8 +1,13 @@
+import { useContext } from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-const PostCardContent = ({ post }) => {
+import { PostContext } from '../../context/PostContext';
+
+const PostCardContent = () => {
+  const post = useContext(PostContext);
+
   return (
     <Stack sx={{ position: 'relative' }}>
       <Box

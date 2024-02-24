@@ -25,13 +25,9 @@ const PostCard = ({ post }) => {
             },
           }}
         >
-          <PostCardHeader post={post} />
-          {post.imageUrl ? (
-            <PostCardImage post={post} />
-          ) : (
-            <PostCardContent post={post} />
-          )}
-          <PostActionFooter post={post} />
+          <PostCardHeader />
+          {post.imageUrl ? <PostCardImage /> : <PostCardContent />}
+          <PostActionFooter />
         </Paper>
       </Link>
     </PostContext.Provider>

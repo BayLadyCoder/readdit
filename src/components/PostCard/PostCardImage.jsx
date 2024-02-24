@@ -1,9 +1,12 @@
+import { useContext } from 'react';
 import Stack from '@mui/material/Stack';
 import CardMedia from '@mui/material/CardMedia';
 
 import { baseURL } from '../../resources/URLs.js';
+import { PostContext } from '../../context/PostContext';
 
-const PostCardImage = ({ post }) => {
+const PostCardImage = () => {
+  const post = useContext(PostContext);
   return (
     <Stack direction='row' justifyContent='center'>
       <CardMedia
