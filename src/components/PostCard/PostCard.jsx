@@ -1,35 +1,38 @@
 import { Link } from 'react-router-dom';
+import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 
 import { PostContext } from '../../context/PostContext';
 import PostActionFooter from '../PostActionFooter/PostActionFooter';
+import PostVoters from '../PostVoters/PostVoters';
 import PostCardHeader from './PostCardHeader';
 import PostCardContent from './PostCardContent';
 import PostCardImage from './PostCardImage';
 
+const PostCardPaperStyles = {
+  width: {
+    xs: 345,
+    sm: 500,
+    md: 600,
+    marginBottom: 10,
+    display: 'flex',
+    padding: '0px 4px 0px 0px',
+  },
+};
+
 const PostCard = ({ post }) => {
   return (
     <PostContext.Provider value={post}>
-      <Link to={`/posts/${post._id}`} style={{ textDecoration: 'none' }}>
-        <Paper
-          sx={{
-            width: {
-              xs: 345,
-              sm: 500,
-              md: 600,
-              marginBottom: 10,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 8,
-              padding: '10px 4px 6px 12px',
-            },
-          }}
-        >
-          <PostCardHeader />
-          {post.imageUrl ? <PostCardImage /> : <PostCardContent />}
+      <Paper sx={PostCardPaperStyles}>
+        <PostVoters />
+        <Stack spacing={1} sx={{ width: '100%', padding: '10px 0px 8px 8px' }}>
+          <Link to={`/posts/${post._id}`} style={{ textDecoration: 'none' }}>
+            <PostCardHeader />
+            {post.imageUrl ? <PostCardImage /> : <PostCardContent />}
+          </Link>
           <PostActionFooter />
-        </Paper>
-      </Link>
+        </Stack>
+      </Paper>
     </PostContext.Provider>
   );
 };

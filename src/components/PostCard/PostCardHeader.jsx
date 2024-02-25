@@ -28,7 +28,6 @@ const PostCardHeader = () => {
 
   return (
     <Stack
-      pb={1}
       spacing={1}
       direction='row'
       justifyContent='space-between'
