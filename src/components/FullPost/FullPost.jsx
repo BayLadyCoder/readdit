@@ -4,10 +4,10 @@ import Stack from '@mui/material/Stack';
 
 import { useFetch } from '../../customHooks/useFetch';
 import { createPostURLByPostId } from '../../resources/URLs.js';
-import { baseURL } from '../../resources/URLs';
 import PostActionFooter from '../../components/PostActionFooter/PostActionFooter';
 import PostHeader from '../PostHeader/PostHeader.jsx';
 import PostTextContent from '../PostTextContent/PostTextContent.jsx';
+import PostCardImage from '../PostCard/PostCardImage.jsx';
 import { PostContext } from '../../context/PostContext';
 
 const FullPost = () => {
@@ -32,9 +32,7 @@ const FullPost = () => {
       >
         <Stack gap={1}>
           <PostHeader />
-          {data.post.imageUrl && (
-            <img src={baseURL + '/' + data.post.imageUrl} alt='Post image' />
-          )}
+          {data.post.imageUrl && <PostCardImage isFullPost />}
           {data.post.content && <PostTextContent isFullPost />}
         </Stack>
         <PostActionFooter showAuthorActionIcon />

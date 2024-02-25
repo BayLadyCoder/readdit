@@ -5,8 +5,15 @@ import CardMedia from '@mui/material/CardMedia';
 import { baseURL } from '../../resources/URLs.js';
 import { PostContext } from '../../context/PostContext';
 
-const PostCardImage = () => {
+const PostCardImageStyles = {
+  maxWidth: { sm: 300, md: 400 },
+  maxHeight: 300,
+};
+
+const PostCardImage = ({ isFullPost }) => {
   const post = useContext(PostContext);
+  const styles = isFullPost ? {} : PostCardImageStyles;
+
   return (
     <Stack direction='row' justifyContent='center'>
       <CardMedia
@@ -15,8 +22,7 @@ const PostCardImage = () => {
         alt='Post image'
         sx={{
           objectFit: 'contain',
-          maxWidth: { sm: 300, md: 400 },
-          maxHeight: 300,
+          ...styles,
         }}
       />
     </Stack>
