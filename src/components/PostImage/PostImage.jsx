@@ -3,16 +3,16 @@ import Stack from '@mui/material/Stack';
 import CardMedia from '@mui/material/CardMedia';
 
 import { baseURL } from '../../resources/URLs.js';
-import { PostContext } from '../../context/PostContext';
+import { PostContext } from '../../context/PostContext.jsx';
 
-const PostCardImageStyles = {
+const mediumImageStyles = {
   maxWidth: { sm: 300, md: 400 },
   maxHeight: 300,
 };
 
-const PostCardImage = ({ isFullPost }) => {
+const PostImage = ({ isFullPost }) => {
   const post = useContext(PostContext);
-  const styles = isFullPost ? {} : PostCardImageStyles;
+  const styles = isFullPost ? {} : mediumImageStyles;
 
   return (
     <Stack direction='row' justifyContent='center'>
@@ -29,4 +29,4 @@ const PostCardImage = ({ isFullPost }) => {
   );
 };
 
-export default PostCardImage;
+export default PostImage;

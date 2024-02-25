@@ -7,7 +7,7 @@ import { createPostURLByPostId } from '../../resources/URLs.js';
 import PostActionFooter from '../../components/PostActionFooter/PostActionFooter';
 import PostHeader from '../PostHeader/PostHeader.jsx';
 import PostTextContent from '../PostTextContent/PostTextContent.jsx';
-import PostCardImage from '../PostCard/PostCardImage.jsx';
+import PostImage from '../PostImage/PostImage.jsx';
 import { PostContext } from '../../context/PostContext';
 
 const FullPost = () => {
@@ -32,7 +32,7 @@ const FullPost = () => {
       >
         <Stack gap={1}>
           <PostHeader />
-          {data.post.imageUrl && <PostCardImage isFullPost />}
+          {data.post.imageUrl && <PostImage isFullPost />}
           {data.post.content && <PostTextContent isFullPost />}
         </Stack>
         <PostActionFooter showAuthorActionIcon />

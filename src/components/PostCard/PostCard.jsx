@@ -7,7 +7,7 @@ import PostActionFooter from '../PostActionFooter/PostActionFooter';
 import PostVoters from '../PostVoters/PostVoters';
 import PostHeader from '../PostHeader/PostHeader';
 import PostTextContent from '../PostTextContent/PostTextContent';
-import PostCardImage from './PostCardImage';
+import PostImage from '../PostImage/PostImage';
 
 const PostCardPaperStyles = {
   width: {
@@ -28,7 +28,7 @@ const PostCard = ({ post }) => {
         <Stack spacing={1} sx={{ width: '100%', padding: '10px 0px 8px 8px' }}>
           <Link to={`/posts/${post._id}`} style={{ textDecoration: 'none' }}>
             <PostHeader showAuthorActionIcon />
-            {post.imageUrl ? <PostCardImage /> : <PostTextContent />}
+            {post.imageUrl ? <PostImage /> : <PostTextContent />}
           </Link>
           <PostActionFooter />
         </Stack>
