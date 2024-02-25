@@ -10,7 +10,7 @@ import PostActionFooterButton from './PostActionFooterButton';
 import AuthorMoreActionButton from '../AuthorMoreActionButton/AuthorMoreActionButton';
 import { PostContext } from '../../context/PostContext';
 
-const PostActionFooter = ({ showAuthorActionIcon }) => {
+const PostActionFooter = ({ showAuthorActionIcon, isClassicStyle }) => {
   const post = useContext(PostContext);
   const username = useSelector((state) => state.user.username);
   const isAuthor = username === post.author.username;
@@ -20,7 +20,7 @@ const PostActionFooter = ({ showAuthorActionIcon }) => {
       <Box>
         <PostActionFooterButton
           areaLabel='comments'
-          buttonLabel='58 Comments'
+          buttonLabel={isClassicStyle ? '58' : '58 Comments'}
           Icon={ModeCommentOutlinedIcon}
           onClickFn={() => {
             return;
