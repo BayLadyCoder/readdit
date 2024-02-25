@@ -5,29 +5,35 @@ import Typography from '@mui/material/Typography';
 
 import { PostContext } from '../../context/PostContext';
 
-const PostCardContent = () => {
+const Overlay = () => {
+  return (
+    <Box
+      sx={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: 'linear-gradient(to bottom,rgba(250,250,250,0.1), white)',
+        width: '100%',
+        height: '100%',
+        zIndex: 2,
+      }}
+    ></Box>
+  );
+};
+
+const PostCardContent = ({ isFullPost }) => {
   const post = useContext(PostContext);
 
   return (
     <Stack sx={{ position: 'relative' }}>
-      <Box
-        sx={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'linear-gradient(to bottom,rgba(250,250,250,0.1), white)',
-          width: '100%',
-          height: '100%',
-          zIndex: 2,
-        }}
-      ></Box>
+      {!isFullPost && <Overlay />}
       <Box
         sx={{
           p: '16px',
           pt: 0,
-          maxHeight: 300,
+          maxHeight: isFullPost ? 'auto' : 200,
           whiteSpace: 'break-spaces',
           overflow: 'hidden',
           textAlign: 'justify',
@@ -36,6 +42,7 @@ const PostCardContent = () => {
         <Typography
           sx={{
             fontFamily: 'Noto Sans',
+            fontSize: '14px',
           }}
           width='100%'
         >

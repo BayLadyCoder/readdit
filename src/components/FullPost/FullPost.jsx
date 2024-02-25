@@ -1,13 +1,13 @@
 import { useParams } from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 
 import { useFetch } from '../../customHooks/useFetch';
 import { createPostURLByPostId } from '../../resources/URLs.js';
 import { baseURL } from '../../resources/URLs';
 import PostActionFooter from '../../components/PostActionFooter/PostActionFooter';
 import PostHeader from '../PostHeader/PostHeader.jsx';
+import PostCardContent from '../PostCard/PostCardContent.jsx';
 import { PostContext } from '../../context/PostContext';
 
 const FullPost = () => {
@@ -35,19 +35,7 @@ const FullPost = () => {
           {data.post.imageUrl && (
             <img src={baseURL + '/' + data.post.imageUrl} alt='Post image' />
           )}
-          {data.post.content && (
-            <Typography
-              sx={{
-                p: { sm: '5px 10px', md: '10px 20px' },
-                whiteSpace: 'break-spaces',
-                textAlign: 'justify',
-                fontSize: '14px',
-                fontFamily: 'Noto Sans',
-              }}
-            >
-              {data.post.content}
-            </Typography>
-          )}
+          {data.post.content && <PostCardContent isFullPost />}
         </Stack>
         <PostActionFooter showAuthorActionIcon />
       </Paper>
