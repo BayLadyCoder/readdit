@@ -7,7 +7,7 @@ import { useFetch } from '../../customHooks/useFetch';
 import { createPostURLByPostId } from '../../resources/URLs.js';
 import { baseURL } from '../../resources/URLs';
 import PostActionFooter from '../../components/PostActionFooter/PostActionFooter';
-import PostCardHeader from '../../components/PostCard/PostCardHeader';
+import PostHeader from '../PostHeader/PostHeader.jsx';
 import { PostContext } from '../../context/PostContext';
 
 const FullPost = () => {
@@ -31,7 +31,7 @@ const FullPost = () => {
         }}
       >
         <Stack gap={1}>
-          <PostCardHeader />
+          <PostHeader />
           {data.post.imageUrl && (
             <img src={baseURL + '/' + data.post.imageUrl} alt='Post image' />
           )}

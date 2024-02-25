@@ -3,8 +3,8 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { timeAgo } from '../../helpers/timeAgo';
-import { PostContext } from '../../context/PostContext';
+import { timeAgo } from '../../helpers/timeAgo.js';
+import { PostContext } from '../../context/PostContext.jsx';
 import AuthorMoreActionButton from '../AuthorMoreActionButton/AuthorMoreActionButton.jsx';
 
 const PostTitle = ({ title }) => {
@@ -23,7 +23,7 @@ const PostMetaData = ({ authorUsername, createdAt }) => {
   );
 };
 
-const PostCardHeader = ({ showAuthorActionIcon }) => {
+const PostHeader = ({ showAuthorActionIcon }) => {
   const post = useContext(PostContext);
 
   return (
@@ -45,4 +45,4 @@ const PostCardHeader = ({ showAuthorActionIcon }) => {
   );
 };
 
-export default PostCardHeader;
+export default PostHeader;

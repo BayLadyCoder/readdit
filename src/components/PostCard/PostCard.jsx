@@ -5,7 +5,7 @@ import Paper from '@mui/material/Paper';
 import { PostContext } from '../../context/PostContext';
 import PostActionFooter from '../PostActionFooter/PostActionFooter';
 import PostVoters from '../PostVoters/PostVoters';
-import PostCardHeader from './PostCardHeader';
+import PostHeader from '../PostHeader/PostHeader';
 import PostCardContent from './PostCardContent';
 import PostCardImage from './PostCardImage';
 
@@ -27,7 +27,7 @@ const PostCard = ({ post }) => {
         <PostVoters />
         <Stack spacing={1} sx={{ width: '100%', padding: '10px 0px 8px 8px' }}>
           <Link to={`/posts/${post._id}`} style={{ textDecoration: 'none' }}>
-            <PostCardHeader showAuthorActionIcon />
+            <PostHeader showAuthorActionIcon />
             {post.imageUrl ? <PostCardImage /> : <PostCardContent />}
           </Link>
           <PostActionFooter />
