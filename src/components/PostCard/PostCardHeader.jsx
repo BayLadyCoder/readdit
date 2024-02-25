@@ -23,7 +23,7 @@ const PostMetaData = ({ authorUsername, createdAt }) => {
   );
 };
 
-const PostCardHeader = () => {
+const PostCardHeader = ({ showAuthorActionIcon }) => {
   const post = useContext(PostContext);
 
   return (
@@ -40,7 +40,7 @@ const PostCardHeader = () => {
         />
         <PostTitle title={post.title} />
       </Box>
-      <AuthorMoreActionButton post={post} forHeader />
+      {showAuthorActionIcon && <AuthorMoreActionButton post={post} forHeader />}
     </Stack>
   );
 };

@@ -6,8 +6,8 @@ import Typography from '@mui/material/Typography';
 import { useFetch } from '../../customHooks/useFetch';
 import { createPostURLByPostId } from '../../resources/URLs.js';
 import { baseURL } from '../../resources/URLs';
-import { timeAgo } from '../../helpers/timeAgo';
 import PostActionFooter from '../../components/PostActionFooter/PostActionFooter';
+import PostCardHeader from '../../components/PostCard/PostCardHeader';
 import { PostContext } from '../../context/PostContext';
 
 const FullPost = () => {
@@ -31,19 +31,7 @@ const FullPost = () => {
         }}
       >
         <Stack gap={1}>
-          <Typography
-            variant='body2'
-            color='gray'
-            sx={{
-              fontSize: '12px',
-            }}
-          >
-            Posted by : {data.post.author.username}{' '}
-            {timeAgo(data.post.createdAt)}
-          </Typography>
-          <Typography variant='h1' sx={{ fontSize: '20px', fontWeight: 500 }}>
-            {data.post.title}
-          </Typography>
+          <PostCardHeader />
           {data.post.imageUrl && (
             <img src={baseURL + '/' + data.post.imageUrl} alt='Post image' />
           )}

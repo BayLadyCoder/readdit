@@ -27,7 +27,7 @@ const PostCard = ({ post }) => {
         <PostVoters />
         <Stack spacing={1} sx={{ width: '100%', padding: '10px 0px 8px 8px' }}>
           <Link to={`/posts/${post._id}`} style={{ textDecoration: 'none' }}>
-            <PostCardHeader />
+            <PostCardHeader showAuthorActionIcon />
             {post.imageUrl ? <PostCardImage /> : <PostCardContent />}
           </Link>
           <PostActionFooter />
