@@ -23,7 +23,7 @@ const Overlay = () => {
   );
 };
 
-const PostCardContent = ({ isFullPost }) => {
+const PostTextContent = ({ isFullPost }) => {
   const post = useContext(PostContext);
 
   return (
@@ -53,4 +53,4 @@ const PostCardContent = ({ isFullPost }) => {
   );
 };
 
-export default PostCardContent;
+export default PostTextContent;
