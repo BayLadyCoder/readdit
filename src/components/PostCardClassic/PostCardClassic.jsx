@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import placeholderImage from '../../assets/images/no-image.png';
-import { baseURL } from '../../resources/URLs';
 import { PostContext } from '../../context/PostContext';
 import PostVoters from '../PostVoters/PostVoters';
 import PostActionFooter from '../PostActionFooter/PostActionFooter';
+import PostImage from '../PostImage/PostImage';
+import { PostType } from '../../enums/post';
 
 const PostCardClassic = ({ post }) => {
   return (
@@ -22,14 +22,7 @@ const PostCardClassic = ({ post }) => {
           sx={{ border: '1px solid #ddd', p: 1, height: '100px' }}
         >
           <PostVoters />
-          <img
-            style={{ objectFit: 'contain' }}
-            width='100px'
-            src={
-              post.imageUrl ? `${baseURL}/${post.imageUrl}` : placeholderImage
-            }
-            alt='post-image'
-          />
+          <PostImage postType={PostType.CLASSIC} />
 
           <Box width='100%'>
             <Box>

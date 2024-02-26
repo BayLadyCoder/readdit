@@ -9,6 +9,7 @@ import PostHeader from '../PostHeader/PostHeader.jsx';
 import PostTextContent from '../PostTextContent/PostTextContent.jsx';
 import PostImage from '../PostImage/PostImage.jsx';
 import { PostContext } from '../../context/PostContext';
+import { PostType } from '../../enums/post.js';
 
 const FullPost = () => {
   const { postId } = useParams();
@@ -32,7 +33,7 @@ const FullPost = () => {
       >
         <Stack gap={1}>
           <PostHeader />
-          {data.post.imageUrl && <PostImage isFullPost />}
+          {data.post.imageUrl && <PostImage postType={PostType.FULL} />}
           {data.post.content && <PostTextContent isFullPost />}
         </Stack>
         <PostActionFooter showAuthorActionIcon />
