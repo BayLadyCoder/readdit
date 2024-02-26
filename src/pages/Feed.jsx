@@ -1,8 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { io } from 'socket.io-client';
+
 import PostCard from '../components/PostCard/PostCard';
 import Stack from '@mui/material/Stack';
 import { useFetch } from '../customHooks/useFetch';
-import { getAllPostsURL } from '../resources/URLs.js';
+import { getAllPostsURL, baseURL } from '../resources/URLs.js';
 import { setPosts } from '../reducers/postsSlice.js';
 
 const Feed = () => {
@@ -15,7 +17,11 @@ const Feed = () => {
   const { isLoading, isError } = useFetch({
     url: getAllPostsURL,
     immediate: !hasFetchedFeedPosts,
-    dataHandler: (data) => dispatch(setPosts(data.posts)),
+    dataHandler: (data) => {
+      dispatch(setPosts(data.posts));
+      // connect websocket
+      io(baseURL);
+    },
   });
 
   if (isError) return <h1>Failed to load</h1>;
