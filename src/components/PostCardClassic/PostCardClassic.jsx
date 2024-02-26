@@ -35,7 +35,7 @@ const PostCardClassic = ({ post }) => {
                 Posted By {post.author.username}
               </Typography>
             </Box>
-            <PostActionFooter isClassicStyle />
+            <PostActionFooter postType={PostType.CLASSIC} />
           </Box>
         </Stack>
       </Link>

@@ -9,8 +9,9 @@ import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import PostActionFooterButton from './PostActionFooterButton';
 import AuthorMoreActionButton from '../AuthorMoreActionButton/AuthorMoreActionButton';
 import { PostContext } from '../../context/PostContext';
+import { PostType } from '../../enums/post';
 
-const PostActionFooter = ({ showAuthorActionIcon, isClassicStyle }) => {
+const PostActionFooter = ({ showAuthorActionIcon, postType }) => {
   const post = useContext(PostContext);
   const username = useSelector((state) => state.user.username);
   const isAuthor = username === post.author.username;
@@ -20,7 +21,7 @@ const PostActionFooter = ({ showAuthorActionIcon, isClassicStyle }) => {
       <Box>
         <PostActionFooterButton
           areaLabel='comments'
-          buttonLabel={isClassicStyle ? '58' : '58 Comments'}
+          buttonLabel={postType === PostType.CLASSIC ? '58' : '58 Comments'}
           Icon={ModeCommentOutlinedIcon}
           onClickFn={() => {
             return;
