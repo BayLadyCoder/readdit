@@ -22,7 +22,7 @@ export const timeAgo = (dateParam) => {
   const years = Math.round(months / 12);
 
   if (seconds < 5) {
-    return 'a few seconds ago';
+    return 'just now';
   } else if (seconds < 60) {
     return `${seconds} seconds ago`;
   } else if (minutes < 60) {
