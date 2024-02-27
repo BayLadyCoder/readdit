@@ -43,7 +43,7 @@ test('input future date, should throw error', () => {
 });
 
 test('valid input, should return ... ago', () => {
-  expect(timeAgo('2023-12-31T23:59:56')).toBe('a few seconds ago');
+  expect(timeAgo('2023-12-31T23:59:56')).toBe('just now');
   expect(timeAgo('2023-12-31T23:59:55')).toBe('5 seconds ago');
 
   expect(timeAgo('2023-12-31T23:59:00')).toBe('1 minute ago');
