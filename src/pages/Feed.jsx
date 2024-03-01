@@ -21,11 +21,9 @@ const Feed = () => {
     immediate: !hasFetchedFeedPosts,
     dataHandler: (data) => {
       dispatch(setPosts(data.posts));
-      console.log({ socket });
 
       // connect websocket
       if (!socket?.connected) {
-        console.log('CONNECTED WEB SOCKET!!');
         socket = io(baseURL);
         socket.on('posts', (data) => {
           if (data.action === 'create') {
