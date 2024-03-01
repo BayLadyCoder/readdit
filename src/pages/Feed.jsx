@@ -23,7 +23,7 @@ const Feed = () => {
       dispatch(setPosts(data.posts));
 
       // connect websocket
-      if (!socket?.connected) {
+      if (!socket) {
         socket = io(baseURL);
         socket.on('posts', (data) => {
           if (data.action === 'create') {
