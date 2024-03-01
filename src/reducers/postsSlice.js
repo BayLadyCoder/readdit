@@ -14,7 +14,7 @@ export const postsSlice = createSlice({
       state.hasFetchedFeedPosts = true;
     },
     addPost: (state, action) => {
-      state.posts = [...state.posts, action.payload];
+      state.posts = [action.payload, ...state.posts];
     },
     updatePost: (state, action) => {
       state.posts = state.posts.map((post) => {
