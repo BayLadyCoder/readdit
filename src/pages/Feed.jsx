@@ -5,7 +5,9 @@ import PostCard from '../components/PostCard/PostCard';
 import Stack from '@mui/material/Stack';
 import { useFetch } from '../customHooks/useFetch';
 import { getAllPostsURL, baseURL } from '../resources/URLs.js';
-import { setPosts } from '../reducers/postsSlice.js';
+import { setPosts, addPost } from '../reducers/postsSlice.js';
+
+let socket;
 
 const Feed = () => {
   const posts = useSelector((state) => state.posts.posts);
@@ -19,8 +21,18 @@ const Feed = () => {
     immediate: !hasFetchedFeedPosts,
     dataHandler: (data) => {
       dispatch(setPosts(data.posts));
+      console.log({ socket });
+
       // connect websocket
-      io(baseURL);
+      if (!socket?.connected) {
+        console.log('CONNECTED WEB SOCKET!!');
+        socket = io(baseURL);
+        socket.on('posts', (data) => {
+          if (data.action === 'create') {
+            dispatch(addPost(data.post));
+          }
+        });
+      }
     },
   });
 

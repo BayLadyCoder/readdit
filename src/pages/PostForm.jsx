@@ -95,7 +95,6 @@ const PostForm = () => {
       options: { method, body: formData },
       dataHandler: (data) => {
         if (method === 'POST') {
-          dispatch(setPosts([data.post, ...posts]));
           navigate('/');
         } else if (method === 'PUT') {
           dispatch(updatePost(data.post));
