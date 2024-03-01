@@ -5,7 +5,7 @@ import PostCard from '../components/PostCard/PostCard';
 import Stack from '@mui/material/Stack';
 import { useFetch } from '../customHooks/useFetch';
 import { getAllPostsURL, baseURL } from '../resources/URLs.js';
-import { setPosts, addPost } from '../reducers/postsSlice.js';
+import { setPosts, addPost, deletePost } from '../reducers/postsSlice.js';
 
 let socket;
 
@@ -28,6 +28,8 @@ const Feed = () => {
         socket.on('posts', (data) => {
           if (data.action === 'create') {
             dispatch(addPost(data.post));
+          } else if (data.action === 'delete') {
+            dispatch(deletePost(data.postId));
           }
         });
       }
