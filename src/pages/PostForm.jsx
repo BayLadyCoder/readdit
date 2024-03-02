@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -13,7 +13,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 
 import { useFetch } from '../customHooks/useFetch';
 import { baseURL, createPostURLByPostId } from '../resources/URLs.js';
-import { setPosts, updatePost } from '../reducers/postsSlice.js';
+import { updatePost } from '../reducers/postsSlice.js';
 
 const initialForm = {
   _id: '',
@@ -29,7 +29,6 @@ const initialValidationError = {
 };
 
 const PostForm = () => {
-  const posts = useSelector((state) => state.posts.posts);
   const dispatch = useDispatch();
   const { postId } = useParams();
   const navigate = useNavigate();
