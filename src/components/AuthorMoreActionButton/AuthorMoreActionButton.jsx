@@ -78,7 +78,7 @@ const AuthorMoreActionButton = ({ post, forHeader }) => {
           to={`/posts/${post._id}/edit`}
           style={{ textDecoration: 'none', color: 'inherit' }}
         >
-          <MenuItem onClick={handleClose}>
+          <MenuItem>
             <EditIcon sx={{ mr: '5px' }} size='small' />
             Edit
           </MenuItem>
