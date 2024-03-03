@@ -5,7 +5,12 @@ import PostCard from '../components/PostCard/PostCard';
 import Stack from '@mui/material/Stack';
 import { useFetch } from '../customHooks/useFetch';
 import { getAllPostsURL, baseURL } from '../resources/URLs.js';
-import { setPosts, addPost, deletePost } from '../reducers/postsSlice.js';
+import {
+  setPosts,
+  addPost,
+  deletePost,
+  updatePost,
+} from '../reducers/postsSlice.js';
 
 let socket;
 
@@ -30,6 +35,8 @@ const Feed = () => {
             dispatch(addPost(data.post));
           } else if (data.action === 'delete') {
             dispatch(deletePost(data.postId));
+          } else if (data.action === 'update') {
+            dispatch(updatePost(data.post));
           }
         });
       }
