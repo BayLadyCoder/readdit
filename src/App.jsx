@@ -1,5 +1,5 @@
 import { Link, Route, Routes } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -14,20 +14,10 @@ import Profile from './pages/Profile';
 
 import UserNavMenu from './components/UserNavMenu/UserNavMenu';
 import NotificationAlert from './components/NotificationAlert/NotificationAlert';
-
-import { login } from './reducers/userSlice';
-import { getUserDataFromSS } from './helpers/sessionStorage';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 const App = () => {
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-
-  if (!user.isLoggedIn) {
-    const userData = getUserDataFromSS();
-    if (userData) {
-      dispatch(login(userData));
-    }
-  }
 
   return (
     <Stack>
@@ -78,9 +68,18 @@ const App = () => {
             path='/sign-up'
             element={<LoginOrSignupForm isLogin={false} />}
           />
-          <Route path='/posts/:postId/edit' element={<PostForm />} />
-          <Route path='/posts/new' element={<PostForm />} />
-          <Route path='/profile' element={<Profile />} />
+          <Route
+            path='/posts/:postId/edit'
+            element={<PrivateRoute Component={PostForm} />}
+          />
+          <Route
+            path='/posts/new'
+            element={<PrivateRoute Component={PostForm} />}
+          />
+          <Route
+            path='/profile'
+            element={<PrivateRoute Component={Profile} />}
+          />
         </Routes>
       </Stack>
     </Stack>
