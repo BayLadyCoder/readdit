@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Stack from '@mui/material/Stack';
 
 import Feed from './pages/Feed';
@@ -14,8 +14,19 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import NavBar from './components/NavBar/NavBar';
 import webSocket from './webSocket';
 
+import { login } from './reducers/userSlice';
+import { getUserDataFromSS } from './helpers/sessionStorage';
+
 const App = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
+  if (!user.isLoggedIn) {
+    const userData = getUserDataFromSS();
+    if (userData) {
+      dispatch(login(userData));
+    }
+  }
 
   useEffect(() => {
     webSocket.init(dispatch);
