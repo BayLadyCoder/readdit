@@ -43,14 +43,16 @@ export const useFetch = ({
       setIsLoading(true);
       try {
         const res = await fetch(url, {
-          headers: { Authorization: `Bearer ${token}`, ...options.headers },
           ...options,
+          headers: { Authorization: `Bearer ${token}`, ...options.headers },
         });
 
         const data = await res.json();
 
         if (res.status >= 400) {
           throw new Error(data.message);
+        } else if (res.status >= 500) {
+          throw new Error('Server error!');
         }
 
         dataHandler ? dataHandler(data) : setData(data);
