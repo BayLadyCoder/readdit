@@ -1,18 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { io } from 'socket.io-client';
 
 import PostCard from '../components/PostCard/PostCard';
 import Stack from '@mui/material/Stack';
 import { useFetch } from '../customHooks/useFetch';
-import { getAllPostsURL, baseURL } from '../resources/URLs.js';
-import {
-  setPosts,
-  addPost,
-  deletePost,
-  updatePost,
-} from '../reducers/postsSlice.js';
-
-let socket;
+import { getAllPostsURL } from '../resources/URLs.js';
+import { setPosts } from '../reducers/postsSlice.js';
 
 const Feed = () => {
   const posts = useSelector((state) => state.posts.posts);
@@ -26,20 +18,6 @@ const Feed = () => {
     immediate: !hasFetchedFeedPosts,
     dataHandler: (data) => {
       dispatch(setPosts(data.posts));
-
-      // connect websocket
-      if (!socket) {
-        socket = io(baseURL);
-        socket.on('posts', (data) => {
-          if (data.action === 'create') {
-            dispatch(addPost(data.post));
-          } else if (data.action === 'delete') {
-            dispatch(deletePost(data.postId));
-          } else if (data.action === 'update') {
-            dispatch(updatePost(data.post));
-          }
-        });
-      }
     },
   });
 

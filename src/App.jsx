@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -15,9 +16,15 @@ import Profile from './pages/Profile';
 import UserNavMenu from './components/UserNavMenu/UserNavMenu';
 import NotificationAlert from './components/NotificationAlert/NotificationAlert';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import webSocket from './webSocket';
 
 const App = () => {
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    webSocket.init(dispatch);
+  }, []);
 
   return (
     <Stack>
