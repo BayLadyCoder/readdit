@@ -1,6 +1,11 @@
 import { io } from 'socket.io-client';
 import { baseURL } from '../resources/URLs.js';
-import { addPost, deletePost, updatePost } from '../reducers/postsSlice.js';
+import {
+  addPost,
+  deletePost,
+  updatePost,
+  addComment,
+} from '../reducers/postsSlice.js';
 
 class WebSocket {
   init(dispatch) {
@@ -13,6 +18,11 @@ class WebSocket {
           dispatch(deletePost(data.postId));
         } else if (data.action === 'update') {
           dispatch(updatePost(data.post));
+        }
+      });
+      this.socket.on('comments', (data) => {
+        if (data.action === 'create') {
+          dispatch(addComment(data.comment));
         }
       });
     }

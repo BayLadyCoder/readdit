@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
@@ -9,17 +9,14 @@ import Button from '@mui/material/Button';
 
 import { useFetch } from '../../../customHooks/useFetch';
 import { baseURL } from '../../../resources/URLs.js';
-import { addComment } from '../../../reducers/postsSlice.js';
 
 const CommentForm = () => {
-  const dispatch = useDispatch();
   const authorId = useSelector((state) => state.user._id);
   const { postId } = useParams();
   const [comment, setComment] = useState('');
 
   const { fetchData: submitComment } = useFetch({
     url: `${baseURL}/api/comments`,
-    dataHandler: (data) => dispatch(addComment(data.comment)),
     immediate: false,
   });
   const handleCommentChange = (e) => {
