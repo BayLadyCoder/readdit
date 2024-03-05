@@ -49,10 +49,10 @@ export const useFetch = ({
 
         const data = await res.json();
 
-        if (res.status >= 400) {
+        if (res.status >= 500) {
+          throw new Error('Server error');
+        } else if (res.status >= 400) {
           throw new Error(data.message);
-        } else if (res.status >= 500) {
-          throw new Error('Server error!');
         }
 
         dataHandler ? dataHandler(data) : setData(data);
