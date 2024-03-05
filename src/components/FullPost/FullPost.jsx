@@ -1,9 +1,6 @@
-import { useParams } from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 
-import { useFetch } from '../../customHooks/useFetch';
-import { createPostURLByPostId } from '../../resources/URLs.js';
 import PostActionFooter from '../../components/PostActionFooter/PostActionFooter';
 import PostHeader from '../PostHeader/PostHeader.jsx';
 import PostTextContent from '../PostTextContent/PostTextContent.jsx';
@@ -11,19 +8,9 @@ import PostImage from '../PostImage/PostImage.jsx';
 import { PostContext } from '../../context/PostContext';
 import { PostType } from '../../enums/post.js';
 
-const FullPost = () => {
-  const { postId } = useParams();
-  const { data, isLoading, isError } = useFetch({
-    url: createPostURLByPostId(postId),
-    immediate: true,
-  });
-
-  if (isError) return <h1>Failed to load</h1>;
-  if (isLoading) return <h1>Loading...</h1>;
-  if (!data) return <h1>No post found</h1>;
-
+const FullPost = ({ post }) => {
   return (
-    <PostContext.Provider value={data.post}>
+    <PostContext.Provider value={post}>
       <Paper
         sx={{
           padding: '10px 20px 10px 20px',
@@ -33,8 +20,8 @@ const FullPost = () => {
       >
         <Stack gap={1}>
           <PostHeader />
-          {data.post.imageUrl && <PostImage postType={PostType.FULL} />}
-          {data.post.content && <PostTextContent isFullPost />}
+          {post.imageUrl && <PostImage postType={PostType.FULL} />}
+          {post.content && <PostTextContent isFullPost />}
         </Stack>
         <PostActionFooter showAuthorActionIcon />
       </Paper>
