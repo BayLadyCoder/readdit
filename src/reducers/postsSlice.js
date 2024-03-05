@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   hasFetchedFeedPosts: false,
   posts: [],
+  fullPosts: [],
 };
 
 export const postsSlice = createSlice({
@@ -27,10 +28,28 @@ export const postsSlice = createSlice({
     deletePost: (state, action) => {
       state.posts = state.posts.filter((post) => post._id !== action.payload);
     },
+    addFullPost: (state, action) => {
+      state.fullPosts = [...state.fullPosts, action.payload];
+    },
+    addComment: (state, action) => {
+      state.posts = state.posts.map((post) => {
+        if (post._id === action.payload.postId) {
+          post.comments.push(action.payload);
+        }
+        return post;
+      });
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setPosts, addPost, updatePost, deletePost } = postsSlice.actions;
+export const {
+  setPosts,
+  addPost,
+  updatePost,
+  deletePost,
+  addFullPost,
+  addComment,
+} = postsSlice.actions;
 
 export default postsSlice.reducer;
