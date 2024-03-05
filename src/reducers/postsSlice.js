@@ -32,7 +32,7 @@ export const postsSlice = createSlice({
       state.fullPosts = [...state.fullPosts, action.payload];
     },
     addComment: (state, action) => {
-      state.posts = state.posts.map((post) => {
+      state.fullPosts = state.fullPosts.map((post) => {
         if (post._id === action.payload.postId) {
           post.comments.push(action.payload);
         }
