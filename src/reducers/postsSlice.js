@@ -39,6 +39,16 @@ export const postsSlice = createSlice({
         return post;
       });
     },
+    deleteComment: (state, action) => {
+      state.fullPosts = state.fullPosts.map((post) => {
+        if (post._id === action.payload.postId) {
+          post.comments = post.comments.filter(
+            (comment) => comment._id !== action.payload._id
+          );
+        }
+        return post;
+      });
+    },
   },
 });
 
@@ -50,6 +60,7 @@ export const {
   deletePost,
   addFullPost,
   addComment,
+  deleteComment,
 } = postsSlice.actions;
 
 export default postsSlice.reducer;

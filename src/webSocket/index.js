@@ -5,12 +5,14 @@ import {
   deletePost,
   updatePost,
   addComment,
+  deleteComment,
 } from '../reducers/postsSlice.js';
 
 class WebSocket {
   init(dispatch) {
     if (!this.socket) {
       this.socket = io(baseURL);
+
       this.socket.on('posts', (data) => {
         if (data.action === 'create') {
           dispatch(addPost(data.post));
@@ -20,9 +22,12 @@ class WebSocket {
           dispatch(updatePost(data.post));
         }
       });
+
       this.socket.on('comments', (data) => {
         if (data.action === 'create') {
           dispatch(addComment(data.comment));
+        } else if (data.action === 'delete') {
+          dispatch(deleteComment(data.comment));
         }
       });
     }
