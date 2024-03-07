@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
@@ -12,6 +13,7 @@ const CommentCard = ({ comment }) => {
     immediate: false,
     options: { method: 'DELETE' },
   });
+  const userId = useSelector((state) => state.user._id);
 
   const handleDeleteComment = (e) => {
     e.preventDefault();
@@ -33,9 +35,11 @@ const CommentCard = ({ comment }) => {
         <Typography>Comment: {comment.comment}</Typography>
         <Typography>Author: {comment.author.username}</Typography>
         <Typography>Time ago: {comment.createdAt}</Typography>
-        <IconButton onClick={handleDeleteComment}>
-          <DeleteIcon />
-        </IconButton>
+        {userId === comment.author._id && (
+          <IconButton onClick={handleDeleteComment}>
+            <DeleteIcon />
+          </IconButton>
+        )}
       </Paper>
     </Stack>
   );
