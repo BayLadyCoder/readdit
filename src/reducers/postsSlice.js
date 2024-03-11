@@ -49,6 +49,19 @@ export const postsSlice = createSlice({
         return post;
       });
     },
+    updateComment: (state, action) => {
+      state.fullPosts = state.fullPosts.map((post) => {
+        if (post._id === action.payload.postId) {
+          post.comments = post.comments.map((comment) => {
+            if (comment._id === action.payload._id) {
+              return action.payload;
+            }
+            return comment;
+          });
+        }
+        return post;
+      });
+    },
   },
 });
 
@@ -61,6 +74,7 @@ export const {
   addFullPost,
   addComment,
   deleteComment,
+  updateComment,
 } = postsSlice.actions;
 
 export default postsSlice.reducer;
