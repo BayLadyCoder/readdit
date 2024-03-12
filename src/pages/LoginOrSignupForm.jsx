@@ -75,14 +75,7 @@ const LoginOrSignupForm = ({ isLogin }) => {
         },
       },
       dataHandler: (data) => {
-        dispatch(
-          login({
-            token: data.token,
-            _id: data.userId,
-            username: data.username,
-            cakeDay: data.cakeDay,
-          })
-        );
+        dispatch(login(data));
         navigate('/');
       },
     });
