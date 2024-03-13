@@ -12,6 +12,7 @@ const initialState = {
   isLoggedIn: false,
   posts: undefined,
   cakeDay: undefined,
+  votes: [],
 };
 
 export const userSlice = createSlice({
@@ -39,10 +40,13 @@ export const userSlice = createSlice({
     setUserPosts: (state, action) => {
       state.posts = action.payload;
     },
+    setUserVotes: (state, action) => {
+      state.votes = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { login, logout, setUserPosts } = userSlice.actions;
+export const { login, logout, setUserPosts, setUserVotes } = userSlice.actions;
 
 export default userSlice.reducer;
