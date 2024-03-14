@@ -43,10 +43,34 @@ export const userSlice = createSlice({
     setUserVotes: (state, action) => {
       state.votes = action.payload;
     },
+    addNewUserVote: (state, action) => {
+      state.votes = [...state.votes, action.payload];
+    },
+    updateUserVote: (state, action) => {
+      state.votes = state.votes.map((vote) => {
+        if (vote._id === action.payload._id) {
+          return action.payload;
+        }
+        return vote;
+      });
+    },
+    deleteUserVote: (state, action) => {
+      state.votes = state.votes.filter(
+        (vote) => vote._id !== action.payload._id
+      );
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { login, logout, setUserPosts, setUserVotes } = userSlice.actions;
+export const {
+  login,
+  logout,
+  setUserPosts,
+  setUserVotes,
+  addNewUserVote,
+  updateUserVote,
+  deleteUserVote,
+} = userSlice.actions;
 
 export default userSlice.reducer;
