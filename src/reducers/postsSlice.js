@@ -62,6 +62,14 @@ export const postsSlice = createSlice({
         return post;
       });
     },
+    updatePostVotingScores: (state, action) => {
+      state.posts = state.posts.map((post) => {
+        if (post._id === action.payload.postId) {
+          post.votingScores = post.votingScores + action.payload.scores;
+        }
+        return post;
+      });
+    },
   },
 });
 
@@ -75,6 +83,7 @@ export const {
   addComment,
   deleteComment,
   updateComment,
+  updatePostVotingScores,
 } = postsSlice.actions;
 
 export default postsSlice.reducer;
