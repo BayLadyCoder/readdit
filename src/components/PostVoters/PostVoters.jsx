@@ -52,6 +52,10 @@ const PostVoters = () => {
     immediate: false,
   });
 
+  const { fetchData: unVote } = useFetch({
+    immediate: false,
+  });
+
   const handleUpVote = (vote) => {
     if (userVote) {
       dispatch(updateUserVote(vote));
@@ -112,9 +116,14 @@ const PostVoters = () => {
           }
         },
       });
-    } else if (action === VOTING_ACTION.UN_VOTE) {
-      // todo: call api
-      handleUnVote(userVote);
+    } else if (action === VOTING_ACTION.UN_VOTE && userVote._id) {
+      unVote({
+        url: `${baseURL}/api/votes/${userVote._id}`,
+        options: { method: 'DELETE' },
+        dataHandler: (data) => {
+          handleUnVote(data.vote);
+        },
+      });
     }
   };
 
