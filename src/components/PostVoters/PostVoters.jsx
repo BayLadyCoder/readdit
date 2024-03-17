@@ -132,13 +132,13 @@ const PostVoters = () => {
       <IconButton
         onClick={() => handleClickVote({ click: VOTING_ACTION.UP_VOTE })}
       >
-        <ThumbUpIcon color={status === 1 ? 'primary' : ''} />
+        <ThumbUpIcon fontSize='small' color={status === 1 ? 'primary' : ''} />
       </IconButton>
       <Typography>{post.votingScores}</Typography>
       <IconButton
         onClick={() => handleClickVote({ click: VOTING_ACTION.DOWN_VOTE })}
       >
-        <ThumbDownIcon color={status === -1 ? 'error' : ''} />
+        <ThumbDownIcon fontSize='small' color={status === -1 ? 'error' : ''} />
       </IconButton>
     </Stack>
   );
