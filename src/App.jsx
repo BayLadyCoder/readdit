@@ -14,10 +14,8 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import NavBar from './components/NavBar/NavBar';
 import webSocket from './webSocket';
 
-import { login, setUserVotes } from './reducers/userSlice';
+import { login } from './reducers/userSlice';
 import { getUserDataFromSS } from './helpers/sessionStorage';
-import { useFetch } from './customHooks/useFetch';
-import { baseURL } from './resources/URLs';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -29,14 +27,6 @@ const App = () => {
       dispatch(login(userData));
     }
   }
-
-  useFetch({
-    url: `${baseURL}/api/votes`,
-    immediate: true,
-    dataHandler: (data) => {
-      dispatch(setUserVotes(data.votes));
-    },
-  });
 
   useEffect(() => {
     webSocket.init(dispatch);

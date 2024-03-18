@@ -3,7 +3,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   saveUserDataToSS,
   removeUserDataFromSS,
-} from '../helpers//sessionStorage';
+  updateUserVotesInSS,
+} from '../helpers/sessionStorage';
+import { createAvatarLabel } from '../helpers/createAvatarLabel';
 
 const initialState = {
   token: undefined,
@@ -24,14 +26,11 @@ export const userSlice = createSlice({
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
-      state.token = action.payload.token;
-      state._id = action.payload._id;
-      state.username = action.payload.username;
-      state.cakeDay = action.payload.cakeDay;
+      state = action.payload;
       state.isLoggedIn = true;
-      const splittedUsername = action.payload.username.split('-');
-      state.avatarLabel = `${splittedUsername[0][0]}${splittedUsername[1][0]}`;
+      state.avatarLabel = createAvatarLabel(action.payload.username);
       saveUserDataToSS(action.payload);
+      return state;
     },
     logout: () => {
       removeUserDataFromSS();
@@ -40,11 +39,9 @@ export const userSlice = createSlice({
     setUserPosts: (state, action) => {
       state.posts = action.payload;
     },
-    setUserVotes: (state, action) => {
-      state.votes = action.payload;
-    },
     addNewUserVote: (state, action) => {
       state.votes = [...state.votes, action.payload];
+      updateUserVotesInSS(state.votes);
     },
     updateUserVote: (state, action) => {
       state.votes = state.votes.map((vote) => {
@@ -53,11 +50,13 @@ export const userSlice = createSlice({
         }
         return vote;
       });
+      updateUserVotesInSS(state.votes);
     },
     deleteUserVote: (state, action) => {
       state.votes = state.votes.filter(
         (vote) => vote._id !== action.payload._id
       );
+      updateUserVotesInSS(state.votes);
     },
   },
 });
@@ -67,7 +66,6 @@ export const {
   login,
   logout,
   setUserPosts,
-  setUserVotes,
   addNewUserVote,
   updateUserVote,
   deleteUserVote,
