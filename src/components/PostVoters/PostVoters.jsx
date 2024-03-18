@@ -56,6 +56,10 @@ const PostVoters = () => {
     immediate: false,
   });
 
+  if (!user.isLoggedIn) {
+    return null;
+  }
+
   const handleUpVote = (vote) => {
     if (userVote) {
       dispatch(updateUserVote(vote));
