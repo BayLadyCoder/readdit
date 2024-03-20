@@ -37,7 +37,7 @@ const App = () => {
       <NavBar />
       <Stack
         alignItems='center'
-        sx={{ background: '#eee', minHeight: '100vh', pt: '60px' }}
+        sx={{ background: '#eee', minHeight: '100vh', pt: '60px', pb: '15px' }}
       >
         <NotificationAlert />
         <Routes>
