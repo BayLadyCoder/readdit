@@ -40,7 +40,7 @@ const CommentForm = () => {
     <Stack
       sx={{
         width: { xs: '90%', sm: '80%', md: '70%' },
-        minWidth: { xs: '90%', sm: '80%', md: '70%' },
+        maxWidth: '900px',
       }}
     >
       <Paper
