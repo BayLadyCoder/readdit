@@ -19,7 +19,7 @@ const PostCardClassic = ({ post }) => {
         <Stack
           direction='row'
           spacing={2}
-          sx={{ border: '1px solid #ddd', p: 1, height: '100px' }}
+          sx={{ border: '1px solid #ddd', p: 1, maxHeight: '120px' }}
         >
           <PostVoters />
           <PostImage postType={PostType.CLASSIC} />
