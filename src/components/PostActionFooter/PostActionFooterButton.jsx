@@ -19,6 +19,7 @@ const PostActionFooterButton = ({
       aria-label={ariaLabel}
       size='small'
       sx={{
+        backgroundColor: '#f7f7f7',
         fontSize: '12px',
         fontWeight: 'bold',
         color: '#555',

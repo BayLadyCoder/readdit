@@ -10,15 +10,26 @@ import PostActionFooterButton from './PostActionFooterButton';
 import AuthorMoreActionButton from '../AuthorMoreActionButton/AuthorMoreActionButton';
 import { PostContext } from '../../context/PostContext';
 import { PostType } from '../../enums/post';
+import PostVoters from '../PostVoters/PostVoters';
 
-const PostActionFooter = ({ showAuthorActionIcon, postType }) => {
+const PostActionFooter = ({
+  showAuthorActionIcon,
+  postType,
+  showPostVoters = false,
+}) => {
   const post = useContext(PostContext);
   const username = useSelector((state) => state.user.username);
   const isAuthor = username === post.author.username;
 
   return (
     <Stack direction='row' justifyContent='space-between'>
-      <Box>
+      <Box
+        display='flex'
+        gap={0.5}
+        justifyContent='space-between'
+        alignItems='stretch'
+      >
+        {showPostVoters && <PostVoters direction='row' />}
         <PostActionFooterButton
           areaLabel='comments'
           buttonLabel={postType === PostType.CLASSIC ? '58' : '58 Comments'}

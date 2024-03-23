@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 
 import { PostContext } from '../../context/PostContext';
@@ -16,7 +17,6 @@ const PostCardPaperStyles = {
     md: 600,
     marginBottom: 10,
     display: 'flex',
-    padding: '0px 4px 0px 0px',
   },
 };
 
@@ -24,7 +24,9 @@ const PostCard = ({ post }) => {
   return (
     <PostContext.Provider value={post}>
       <Paper sx={PostCardPaperStyles}>
-        <PostVoters />
+        <Box sx={{ padding: '10px 0px', backgroundColor: '#f7f7f7' }}>
+          <PostVoters />
+        </Box>
         <Stack spacing={1} sx={{ width: '100%', padding: '10px 0px 8px 8px' }}>
           <Link to={`/posts/${post._id}`} style={{ textDecoration: 'none' }}>
             <PostHeader showAuthorActionIcon />

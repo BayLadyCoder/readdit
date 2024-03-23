@@ -4,7 +4,6 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import { PostContext } from '../../context/PostContext';
-import PostVoters from '../PostVoters/PostVoters';
 import PostActionFooter from '../PostActionFooter/PostActionFooter';
 import PostImage from '../PostImage/PostImage';
 import { PostType } from '../../enums/post';
@@ -21,10 +20,9 @@ const PostCardClassic = ({ post }) => {
           spacing={2}
           sx={{ border: '1px solid #ddd', p: 1, maxHeight: '120px' }}
         >
-          <PostVoters />
           <PostImage postType={PostType.CLASSIC} />
 
-          <Box width='100%'>
+          <Stack width='100%' justifyContent='space-between'>
             <Box>
               <Typography>{post.title}</Typography>
               <Typography
@@ -35,8 +33,11 @@ const PostCardClassic = ({ post }) => {
                 Posted By {post.author.username}
               </Typography>
             </Box>
-            <PostActionFooter postType={PostType.CLASSIC} />
-          </Box>
+            <PostActionFooter
+              postType={PostType.CLASSIC}
+              showPostVoters={true}
+            />
+          </Stack>
         </Stack>
       </Link>
     </PostContext.Provider>

@@ -39,7 +39,7 @@ const getActionAndIsUpVote = (click, status) => {
   return { action, isUpVote };
 };
 
-const PostVoters = () => {
+const PostVoters = ({ direction = 'column' }) => {
   const post = useContext(PostContext);
   const postId = post._id;
   const dispatch = useDispatch();
@@ -94,7 +94,8 @@ const PostVoters = () => {
     dispatch(deleteUserVote(vote));
   };
 
-  const handleClickVote = ({ click }) => {
+  const handleClickVote = (e, { click }) => {
+    e.preventDefault();
     const { action, isUpVote } = getActionAndIsUpVote(click, status);
 
     if (
@@ -131,18 +132,43 @@ const PostVoters = () => {
     }
   };
 
+  const iconSize = direction === 'row' ? '18px' : 'medium';
+
   return (
-    <Stack alignItems='center' sx={{ backgroundColor: '#f7f7f7' }}>
+    <Stack
+      direction={direction}
+      alignItems='center'
+      sx={{
+        backgroundColor: '#f7f7f7',
+        display: 'inline-flex',
+        borderRadius: direction === 'row' ? '4px' : '0px',
+        padding: '0px 4px',
+      }}
+    >
       <IconButton
-        onClick={() => handleClickVote({ click: VOTING_ACTION.UP_VOTE })}
+        onClick={(e) => handleClickVote(e, { click: VOTING_ACTION.UP_VOTE })}
       >
-        <ThumbUpIcon fontSize='small' color={status === 1 ? 'primary' : ''} />
+        <ThumbUpIcon
+          sx={{ fontSize: iconSize }}
+          color={status === 1 ? 'primary' : ''}
+        />
       </IconButton>
-      <Typography>{post.votingScores}</Typography>
-      <IconButton
-        onClick={() => handleClickVote({ click: VOTING_ACTION.DOWN_VOTE })}
+      <Typography
+        p={1}
+        sx={{
+          fontSize: '14px',
+          padding: direction === 'row' ? '0px 4px' : '0px',
+        }}
       >
-        <ThumbDownIcon fontSize='small' color={status === -1 ? 'error' : ''} />
+        {post.votingScores}
+      </Typography>
+      <IconButton
+        onClick={(e) => handleClickVote(e, { click: VOTING_ACTION.DOWN_VOTE })}
+      >
+        <ThumbDownIcon
+          sx={{ fontSize: iconSize }}
+          color={status === -1 ? 'error' : ''}
+        />
       </IconButton>
     </Stack>
   );
