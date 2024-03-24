@@ -30,10 +30,8 @@ const PostCard = ({ post }) => {
         </Box>
         <Stack spacing={1} sx={{ width: '100%', padding: '10px 0px 8px 8px' }}>
           <Link
-            target='_blank'
-            rel='noopener noreferrer'
             to={`/posts/${post._id}`}
-            style={{ textDecoration: 'none' }}
+            style={{ textDecoration: 'none', color: 'inherit' }}
           >
             <PostHeader showAuthorActionIcon />
             {post.imageUrl ? <PostImage /> : <PostTextContent />}
