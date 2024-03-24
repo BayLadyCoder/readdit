@@ -9,6 +9,7 @@ import PostVoters from '../PostVoters/PostVoters';
 import PostHeader from '../PostHeader/PostHeader';
 import PostTextContent from '../PostTextContent/PostTextContent';
 import PostImage from '../PostImage/PostImage';
+import { PostType } from '../../enums/post';
 
 const PostCardPaperStyles = {
   width: {
@@ -22,13 +23,18 @@ const PostCardPaperStyles = {
 
 const PostCard = ({ post }) => {
   return (
-    <PostContext.Provider value={post}>
+    <PostContext.Provider value={{ ...post, postType: PostType.CARD }}>
       <Paper sx={PostCardPaperStyles}>
         <Box sx={{ padding: '10px 0px', backgroundColor: '#f7f7f7' }}>
           <PostVoters />
         </Box>
         <Stack spacing={1} sx={{ width: '100%', padding: '10px 0px 8px 8px' }}>
-          <Link to={`/posts/${post._id}`} style={{ textDecoration: 'none' }}>
+          <Link
+            target='_blank'
+            rel='noopener noreferrer'
+            to={`/posts/${post._id}`}
+            style={{ textDecoration: 'none' }}
+          >
             <PostHeader showAuthorActionIcon />
             {post.imageUrl ? <PostImage /> : <PostTextContent />}
           </Link>

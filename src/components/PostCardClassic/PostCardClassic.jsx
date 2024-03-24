@@ -10,7 +10,7 @@ import { PostType } from '../../enums/post';
 
 const PostCardClassic = ({ post }) => {
   return (
-    <PostContext.Provider value={post}>
+    <PostContext.Provider value={{ ...post, postType: PostType.CLASSIC }}>
       <Link
         to={`/posts/${post._id}`}
         style={{ textDecoration: 'none', color: 'inherit' }}
